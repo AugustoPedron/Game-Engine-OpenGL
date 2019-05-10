@@ -1,0 +1,83 @@
+﻿  pch.cpp
+  Camera.cpp
+  Main.cpp
+f:\augusto\università\progetto grafica\progetto opengl\game engine\game engine\main.cpp(289): warning C4244: 'inizializzazione': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+f:\augusto\università\progetto grafica\progetto opengl\game engine\game engine\main.cpp(494): warning C4244: '=': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+f:\augusto\università\progetto grafica\progetto opengl\game engine\game engine\main.cpp(495): warning C4244: '=': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+f:\augusto\università\progetto grafica\progetto opengl\game engine\game engine\main.cpp(499): warning C4244: 'inizializzazione': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+f:\augusto\università\progetto grafica\progetto opengl\game engine\game engine\main.cpp(500): warning C4244: 'inizializzazione': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+f:\augusto\università\progetto grafica\progetto opengl\game engine\game engine\main.cpp(502): warning C4244: '=': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+f:\augusto\università\progetto grafica\progetto opengl\game engine\game engine\main.cpp(503): warning C4244: '=': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+f:\augusto\università\progetto grafica\progetto opengl\game engine\game engine\main.cpp(509): warning C4244: 'argomento': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+  Mesh.cpp
+f:\augusto\università\progetto grafica\progetto opengl\game engine\game engine\mesh.cpp(35): warning C4267: 'argomento': conversione da 'size_t' a 'GLsizei'. Possibile perdita di dati.
+  Model.cpp
+  shader.cpp
+  Texture.cpp
+  Generazione del codice in corso...
+  etc1_utils.c
+  image_DXT.c
+  image_helper.c
+  SOIL2.c
+  Generazione del codice in corso...
+Main.obj : error LNK2019: riferimento al simbolo esterno __imp_glewInit non risolto nella funzione main
+Main.obj : error LNK2019: riferimento al simbolo esterno glfwInit non risolto nella funzione main
+Main.obj : error LNK2019: riferimento al simbolo esterno glfwTerminate non risolto nella funzione main
+Main.obj : error LNK2019: riferimento al simbolo esterno glfwWindowHint non risolto nella funzione main
+Main.obj : error LNK2019: riferimento al simbolo esterno glfwCreateWindow non risolto nella funzione main
+Main.obj : error LNK2019: riferimento al simbolo esterno glfwWindowShouldClose non risolto nella funzione main
+Main.obj : error LNK2019: riferimento al simbolo esterno glfwSetWindowShouldClose non risolto nella funzione "void __cdecl KeyCallBack(struct GLFWwindow *,int,int,int,int)" (?KeyCallBack@@YAXPEAUGLFWwindow@@HHHH@Z)
+Main.obj : error LNK2019: riferimento al simbolo esterno glfwGetFramebufferSize non risolto nella funzione main
+Main.obj : error LNK2019: riferimento al simbolo esterno glfwPollEvents non risolto nella funzione main
+Main.obj : error LNK2019: riferimento al simbolo esterno glfwSetInputMode non risolto nella funzione main
+Main.obj : error LNK2019: riferimento al simbolo esterno glfwSetKeyCallback non risolto nella funzione main
+Main.obj : error LNK2019: riferimento al simbolo esterno glfwSetCursorPosCallback non risolto nella funzione main
+Main.obj : error LNK2019: riferimento al simbolo esterno glfwGetTime non risolto nella funzione main
+Main.obj : error LNK2019: riferimento al simbolo esterno glfwMakeContextCurrent non risolto nella funzione main
+Main.obj : error LNK2019: riferimento al simbolo esterno glfwSwapBuffers non risolto nella funzione main
+Main.obj : error LNK2001: simbolo esterno __imp___glewBindBuffer non risolto
+Mesh.obj : error LNK2001: simbolo esterno __imp___glewBindBuffer non risolto
+Main.obj : error LNK2001: simbolo esterno __imp___glewBufferData non risolto
+Mesh.obj : error LNK2001: simbolo esterno __imp___glewBufferData non risolto
+Main.obj : error LNK2001: simbolo esterno __imp___glewDeleteBuffers non risolto
+Main.obj : error LNK2001: simbolo esterno __imp___glewGenBuffers non risolto
+Mesh.obj : error LNK2001: simbolo esterno __imp___glewGenBuffers non risolto
+Main.obj : error LNK2001: simbolo esterno __imp___glewEnableVertexAttribArray non risolto
+Mesh.obj : error LNK2001: simbolo esterno __imp___glewEnableVertexAttribArray non risolto
+Main.obj : error LNK2001: simbolo esterno __imp___glewGetUniformLocation non risolto
+Mesh.obj : error LNK2001: simbolo esterno __imp___glewGetUniformLocation non risolto
+Main.obj : error LNK2001: simbolo esterno __imp___glewUniformMatrix4fv non risolto
+Main.obj : error LNK2001: simbolo esterno __imp___glewVertexAttribPointer non risolto
+Mesh.obj : error LNK2001: simbolo esterno __imp___glewVertexAttribPointer non risolto
+Main.obj : error LNK2001: simbolo esterno __imp___glewBindVertexArray non risolto
+Mesh.obj : error LNK2001: simbolo esterno __imp___glewBindVertexArray non risolto
+Main.obj : error LNK2001: simbolo esterno __imp___glewDeleteVertexArrays non risolto
+Main.obj : error LNK2001: simbolo esterno __imp___glewGenVertexArrays non risolto
+Mesh.obj : error LNK2001: simbolo esterno __imp___glewGenVertexArrays non risolto
+Main.obj : error LNK2001: simbolo esterno __imp_glewExperimental non risolto
+Mesh.obj : error LNK2001: simbolo esterno __imp___glewActiveTexture non risolto
+Mesh.obj : error LNK2001: simbolo esterno __imp___glewUniform1i non risolto
+Model.obj : error LNK2019: riferimento al simbolo esterno "public: __cdecl Assimp::Importer::Importer(void)" (??0Importer@Assimp@@QEAA@XZ) non risolto nella funzione "private: void __cdecl Model::loadModel(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?loadModel@Model@@AEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+Model.obj : error LNK2019: riferimento al simbolo esterno "public: __cdecl Assimp::Importer::~Importer(void)" (??1Importer@Assimp@@QEAA@XZ) non risolto nella funzione "private: void __cdecl Model::loadModel(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?loadModel@Model@@AEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+Model.obj : error LNK2019: riferimento al simbolo esterno "public: struct aiScene const * __cdecl Assimp::Importer::ReadFile(char const *,unsigned int)" (?ReadFile@Importer@Assimp@@QEAAPEBUaiScene@@PEBDI@Z) non risolto nella funzione "public: struct aiScene const * __cdecl Assimp::Importer::ReadFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,unsigned int)" (?ReadFile@Importer@Assimp@@QEAAPEBUaiScene@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@I@Z)
+Model.obj : error LNK2019: riferimento al simbolo esterno "public: char const * __cdecl Assimp::Importer::GetErrorString(void)const " (?GetErrorString@Importer@Assimp@@QEBAPEBDXZ) non risolto nella funzione "private: void __cdecl Model::loadModel(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?loadModel@Model@@AEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+Model.obj : error LNK2019: riferimento al simbolo esterno aiGetMaterialTextureCount non risolto nella funzione "public: unsigned int __cdecl aiMaterial::GetTextureCount(enum aiTextureType)const " (?GetTextureCount@aiMaterial@@QEBAIW4aiTextureType@@@Z)
+Model.obj : error LNK2019: riferimento al simbolo esterno aiGetMaterialTexture non risolto nella funzione "public: enum aiReturn __cdecl aiMaterial::GetTexture(enum aiTextureType,unsigned int,struct aiString *,enum aiTextureMapping *,unsigned int *,float *,enum aiTextureOp *,enum aiTextureMapMode *)const " (?GetTexture@aiMaterial@@QEBA?AW4aiReturn@@W4aiTextureType@@IPEAUaiString@@PEAW4aiTextureMapping@@PEAIPEAMPEAW4aiTextureOp@@PEAW4aiTextureMapMode@@@Z)
+Model.obj : error LNK2001: simbolo esterno __imp___glewGenerateMipmap non risolto
+Texture.obj : error LNK2001: simbolo esterno __imp___glewGenerateMipmap non risolto
+shader.obj : error LNK2001: simbolo esterno __imp___glewAttachShader non risolto
+shader.obj : error LNK2001: simbolo esterno __imp___glewCompileShader non risolto
+shader.obj : error LNK2001: simbolo esterno __imp___glewCreateProgram non risolto
+shader.obj : error LNK2001: simbolo esterno __imp___glewCreateShader non risolto
+shader.obj : error LNK2001: simbolo esterno __imp___glewDeleteShader non risolto
+shader.obj : error LNK2001: simbolo esterno __imp___glewGetProgramInfoLog non risolto
+shader.obj : error LNK2001: simbolo esterno __imp___glewGetProgramiv non risolto
+shader.obj : error LNK2001: simbolo esterno __imp___glewGetShaderInfoLog non risolto
+shader.obj : error LNK2001: simbolo esterno __imp___glewGetShaderiv non risolto
+shader.obj : error LNK2001: simbolo esterno __imp___glewLinkProgram non risolto
+shader.obj : error LNK2001: simbolo esterno __imp___glewShaderSource non risolto
+shader.obj : error LNK2001: simbolo esterno __imp___glewUseProgram non risolto
+F:\Augusto\Università\Progetto grafica\Progetto opengl\Game Engine\\..\Librerie\glew\lib\Release\Win32\glew32.lib : warning LNK4272: il tipo 'x86' del computer della libreria è in conflitto con il tipo 'x64' del computer di destinazione
+F:\Augusto\Università\Progetto grafica\Progetto opengl\Game Engine\\..\Librerie\glfw\lib-vc2017\glfw3.lib : warning LNK4272: il tipo 'x86' del computer della libreria è in conflitto con il tipo 'x64' del computer di destinazione
+F:\Augusto\Università\Progetto grafica\Progetto opengl\Game Engine\\..\Librerie\assimp\lib\assimp-vc140-mt.lib : warning LNK4272: il tipo 'x86' del computer della libreria è in conflitto con il tipo 'x64' del computer di destinazione
+F:\Augusto\Università\Progetto grafica\Progetto opengl\Game Engine\x64\Debug\Game Engine.exe : fatal error LNK1120: 48 esterni non risolti
