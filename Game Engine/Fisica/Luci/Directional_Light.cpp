@@ -1,6 +1,6 @@
 #include "Directional_Light.h"
 
-void DirectionalLightSetter::SetDirectionalLight(Shader shader) {
+void DirectionalLightSetter::SetDirectionalLight(ShaderLoader shader) {
 	//directional light
 	shader.SetVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
 	shader.SetVec3("dirLight.position", 20000.0f, 100000.0f, 30000.0f);

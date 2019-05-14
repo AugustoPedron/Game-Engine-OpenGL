@@ -1,10 +1,10 @@
 #include "Shadows.h"
-
+/*
 ShadowSetter::Shadow::Shadow(GLuint TextureID, GLuint VAO) {
 	this->textureID = TextureID;
 	this->VAO = VAO;
 	//this->lightSpaceMatrix = lightSpaceMatrix;
-	this->shader = std::make_shared<Shader>("GLSL/shadowShader.vs", "GLSL/shadowShader.frag");
+	this->shader = std::make_shared<ShaderLoader>("../Game Engine/GLSL/shadowShader.vs", "../Game Engine/GLSL/shadowShader.frag");
 	this->SetShadow();
 }
 
@@ -50,3 +50,7 @@ void ShadowSetter::Shadow::DrawShadows(glm::mat4 model) {
 unsigned int ShadowSetter::Shadow::getDepthMap() {
 	return this->depthMap;
 }
+
+unsigned int ShadowSetter::Shadow::getDepthMapFBO() {
+	return this->depthMapFBO;
+}*/

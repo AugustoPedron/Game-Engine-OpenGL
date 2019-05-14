@@ -12,9 +12,8 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <assimp/types.h>
 
-#include "../../Shader/Shader.h"
-
 namespace ShadowSetter {
+	/*
 	const int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
 	//inline int getDepthMapFBO() { return depthMapFBO; }
 	//inline int getDepthMap() { return depthMap; }
@@ -25,8 +24,7 @@ namespace ShadowSetter {
 		unsigned int depthMap;
 		GLuint VAO;
 		GLuint textureID;
-		std::shared_ptr<Shader> shader;
-		//glm::mat4 lightSpaceMatrix;
+		std::shared_ptr<ShaderLoader> shader;
 		void SetShadow();
 
 	public:
@@ -36,5 +34,7 @@ namespace ShadowSetter {
 		inline int getShadowHeight() { return SHADOW_HEIGHT; }
 		//inline void setTextureID(GLuint texID) { textureID = texID; }
 		unsigned int getDepthMap();
+		unsigned int getDepthMapFBO();
 	};
+*/
 }

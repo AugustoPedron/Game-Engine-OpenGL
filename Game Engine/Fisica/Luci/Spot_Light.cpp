@@ -1,6 +1,6 @@
 #include "Spot_Light.h"
 
-void SpotLightSetter::SetSpotLight(Shader shader, glm::vec3 position, glm::vec3 direction) {
+void SpotLightSetter::SetSpotLight(ShaderLoader shader, glm::vec3 position, glm::vec3 direction) {
 	shader.SetVec3("spotLight.position", position.x, position.y, position.z);
 	shader.SetVec3("spotLight.direction", direction.x, direction.y, direction.z);
 	shader.SetVec3("spotLight.ambient", 0.1f, 0.1f, 0.1f);

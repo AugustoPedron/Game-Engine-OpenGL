@@ -1,13 +1,17 @@
 #include "Camera.h"
 
-Camera::Camera(glm::vec3 position, glm::vec3 up, GLfloat yaw, GLfloat pitch) 
+Camera::Camera(int screen_width, int screen_height, glm::vec3 position, glm::vec3 up, GLfloat yaw, GLfloat pitch)
 	: front(glm::vec3(0.0f, 0.0f, -1.0f)), movementSpeed(SPEED), mouseSens(SENS), zoom(ZOOM) {
 	this->position = position;
 	this->worldUp = up;
 	this->yaw = yaw;
 	this->pitch = pitch;
+	this->screen_height = screen_height;
+	this->screen_width = screen_width;
+	this->projection = glm::perspective(this->zoom, (GLfloat)this->screen_width / (GLfloat)this->screen_height, 0.1f, 1000.0f);
 	this->updateCameraVectors();
 }
+
 
 Camera::Camera(GLfloat posX, GLfloat posY, GLfloat posZ, GLfloat upX, GLfloat upY, GLfloat upZ,	GLfloat yaw, GLfloat pitch) 
 	: front(glm::vec3(0.0f, 0.0f, -1.0f)), movementSpeed(SPEED), mouseSens(SENS), zoom(ZOOM) {
@@ -89,4 +93,8 @@ glm::vec3 Camera::getFront() {
 
 glm::mat4 Camera::GetViewMatrix() {
 	return glm::lookAt(this->position, this->position + this->front, this->up);
+}
+
+glm::mat4 Camera::getProjection() {
+	return this->projection;
 }

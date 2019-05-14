@@ -1,7 +1,7 @@
 #pragma once
-
 #include <iostream>
 #include <vector>
+#include <map>
 #include <GL/glew.h>
 #include "../SOIL2/SOIL2.h"
 

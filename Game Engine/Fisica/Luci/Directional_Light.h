@@ -4,9 +4,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "../../Shader/Shader.h"
-#include "../../Camera/Camera.h"
+#include "../../Shader/ShaderLoader.h"
 
 namespace DirectionalLightSetter {
-	void SetDirectionalLight(Shader shader);
+	void SetDirectionalLight(ShaderLoader shader);
 }

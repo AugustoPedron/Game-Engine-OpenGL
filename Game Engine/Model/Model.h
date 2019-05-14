@@ -1,36 +1,18 @@
 #pragma once
 
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <map>
-#include <vector>
-
-#include <GL/glew.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include "../SOIL2/SOIL2.h"
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
-#include "../Shader/Shader.h"
-#include "../Mesh/Mesh.h"
+#include "ModelLoader.h"
+#include "../Camera/Camera.h"
+#include "../Fisica/Luci/Spot_Light.h"
+#include "../Fisica/Luci/Directional_Light.h"
+#include "../Fisica/Luci/Point_Light.h"
 
 class Model {
 public:
-	Model(const GLchar *path);
-	void Draw(Shader shader);
+	Model() {};
+	Model(std::vector<std::string> paths);
+	void Draw(ShaderLoader shaderLoader, std::vector<glm::mat4> modelsPositions, Camera &camera);
+	void DeleteModels();
 
 private:
-	std::string directory;
-	std::vector<Mesh> meshes;
-	std::vector<Texture> textures_loaded;
-
-	void loadModel(std::string path);
-	void processNode(aiNode *node, const aiScene *scene);
-	Mesh processMesh(aiMesh *mesh, const aiScene *scene);
-	std::vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
-	GLint TextureFromFile(const char *path, std::string directory);
+	std::map<const GLchar*, ModelLoader> Models;
 };

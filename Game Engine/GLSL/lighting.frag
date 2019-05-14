@@ -44,7 +44,7 @@ out vec4 color;
 in vec3 FragPos;
 in vec3 Normal;
 in vec2 TexCoords;
-in vec4 FragPosLightSpace;
+//in vec4 FragPosLightSpace;
 
 uniform vec3 viewPos;
 uniform Material material;
@@ -67,17 +67,17 @@ void main( )
 	vec3 viewDir = normalize( viewPos - FragPos );
 	float gamma = 2.2;
 
-	if(enableDir){
+	if(enableDir == 1){
 		result += CalcDirLight( dirLight, norm, FragPos, viewDir );
 	}
 
-	if(enablePoint){
+	if(enablePoint == 1){
 		for( int i = 0; i < NUMBER_OF_POINT_LIGHT; i++ ){
 			result += CalcPointLight( pointLights[i], norm, FragPos, viewDir );
 		}
 	}
 
-	if(enableSpot){
+	if(enableSpot == 1){
 		result += CalcSpotLight ( spotLight, norm, FragPos, viewDir );
 	}
 	//è il colore risultante da tutte le operazioni per il pixel in elaborazione
@@ -85,8 +85,8 @@ void main( )
 }
 
 vec3 CalcDirLight( DirectionalLight light, vec3 normal, vec3 fragPos, vec3 viewDir ){
-	vec3 lightDir = normalize( -light.direction );
-	//vec3 lightDir = normalize( light.position - fragPos );
+	//vec3 lightDir = normalize( -light.direction );
+	vec3 lightDir = normalize( light.position - fragPos );
 	float diff = max( dot ( normal, lightDir ), 0.0 );
 	vec3 halfwayDir = normalize( lightDir + viewDir );
 	float spec = pow( max( dot( normal, halfwayDir ), 0.0 ), material.shininess );

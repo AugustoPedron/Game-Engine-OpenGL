@@ -1,212 +1,76 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="File di intestazione">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="SOIL2">
-      <UniqueIdentifier>{24a3b89a-3d8a-4aff-b0c3-9aa11f2c61e6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fisica">
-      <UniqueIdentifier>{3c533433-c2ce-47cd-a804-5631dc4d5f23}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Modelli">
-      <UniqueIdentifier>{8e8d55a7-ac79-4296-9dc8-8b76fc3c6a5f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Texture">
-      <UniqueIdentifier>{c86b7faa-508e-4cd1-b935-98b541b2a5e3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Camera">
-      <UniqueIdentifier>{f23ac275-063d-40cf-8436-147a02a44bef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Main">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Shader">
-      <UniqueIdentifier>{74dc07df-b9cb-454d-9df8-d315ecca4c46}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fisica\Luci">
-      <UniqueIdentifier>{c019088f-3601-43e7-8677-c39135a6ee51}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GLSL">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Fisica\Shadows">
-      <UniqueIdentifier>{08533c33-8670-4934-8769-ec65602db7ca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Mesh">
-      <UniqueIdentifier>{0478861e-4242-4a26-be04-e02292b7a98c}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Camera\Camera.cpp" />
+    <ClCompile Include="Fisica\Luci\directional_light.cpp" />
+    <ClCompile Include="Fisica\Luci\Luce.cpp" />
+    <ClCompile Include="Fisica\Luci\Point_Light.cpp" />
+    <ClCompile Include="Fisica\Luci\Spot_Light.cpp" />
+    <ClCompile Include="Fisica\Shadows\Shadows.cpp" />
+    <ClCompile Include="Mesh\Mesh.cpp" />
+    <ClCompile Include="Mesh\MeshLoader.cpp" />
+    <ClCompile Include="Model\Model.cpp" />
+    <ClCompile Include="Model\ModelLoader.cpp" />
+    <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="Scene\SceneList.cpp" />
+    <ClCompile Include="Shader\Shader.cpp" />
+    <ClCompile Include="Shader\ShaderLoader.cpp" />
+    <ClCompile Include="SOIL2\etc1_utils.c" />
+    <ClCompile Include="SOIL2\image_DXT.c" />
+    <ClCompile Include="SOIL2\image_helper.c" />
+    <ClCompile Include="SOIL2\SOIL2.c" />
+    <ClCompile Include="Texture\Texture.cpp" />
+    <ClCompile Include="Skybox\Skybox.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="SOIL2\etc1_utils.h">
-      <Filter>SOIL2</Filter>
-    </ClInclude>
-    <ClInclude Include="SOIL2\image_DXT.h">
-      <Filter>SOIL2</Filter>
-    </ClInclude>
-    <ClInclude Include="SOIL2\image_helper.h">
-      <Filter>SOIL2</Filter>
-    </ClInclude>
-    <ClInclude Include="SOIL2\jo_jpeg.h">
-      <Filter>SOIL2</Filter>
-    </ClInclude>
-    <ClInclude Include="SOIL2\pkm_helper.h">
-      <Filter>SOIL2</Filter>
-    </ClInclude>
-    <ClInclude Include="SOIL2\pvr_helper.h">
-      <Filter>SOIL2</Filter>
-    </ClInclude>
-    <ClInclude Include="SOIL2\SOIL2.h">
-      <Filter>SOIL2</Filter>
-    </ClInclude>
-    <ClInclude Include="SOIL2\stbi_DDS.h">
-      <Filter>SOIL2</Filter>
-    </ClInclude>
-    <ClInclude Include="SOIL2\stbi_DDS_c.h">
-      <Filter>SOIL2</Filter>
-    </ClInclude>
-    <ClInclude Include="SOIL2\stbi_ext.h">
-      <Filter>SOIL2</Filter>
-    </ClInclude>
-    <ClInclude Include="SOIL2\stbi_ext_c.h">
-      <Filter>SOIL2</Filter>
-    </ClInclude>
-    <ClInclude Include="SOIL2\stbi_pkm.h">
-      <Filter>SOIL2</Filter>
-    </ClInclude>
-    <ClInclude Include="SOIL2\stbi_pkm_c.h">
-      <Filter>SOIL2</Filter>
-    </ClInclude>
-    <ClInclude Include="SOIL2\stbi_pvr.h">
-      <Filter>SOIL2</Filter>
-    </ClInclude>
-    <ClInclude Include="SOIL2\stbi_pvr_c.h">
-      <Filter>SOIL2</Filter>
-    </ClInclude>
-    <ClInclude Include="SOIL2\stb_image.h">
-      <Filter>SOIL2</Filter>
-    </ClInclude>
-    <ClInclude Include="SOIL2\stb_image_write.h">
-      <Filter>SOIL2</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera\Camera.h">
-      <Filter>Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Fisica\Luci\Directional_Light.h">
-      <Filter>Fisica\Luci</Filter>
-    </ClInclude>
-    <ClInclude Include="Fisica\Luci\Luce.h">
-      <Filter>Fisica\Luci</Filter>
-    </ClInclude>
-    <ClInclude Include="Fisica\Luci\Point_Light.h">
-      <Filter>Fisica\Luci</Filter>
-    </ClInclude>
-    <ClInclude Include="Fisica\Luci\Spot_Light.h">
-      <Filter>Fisica\Luci</Filter>
-    </ClInclude>
-    <ClInclude Include="Fisica\Shadows\Shadows.h">
-      <Filter>Fisica\Shadows</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh\Mesh.h">
-      <Filter>Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="Model\Model.h">
-      <Filter>Modelli</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture\Texture.h">
-      <Filter>Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader\Shader.h">
-      <Filter>Shader</Filter>
-    </ClInclude>
+    <None Include="glew32.dll" />
+    <None Include="assimp-vc140-mt.dll" />
+    <None Include="GLSL\cubeMap.frag" />
+    <None Include="GLSL\cubeMap.vs" />
+    <None Include="GLSL\lamp.frag" />
+    <None Include="GLSL\lamp.vs" />
+    <None Include="GLSL\lighting.frag" />
+    <None Include="GLSL\lighting.vs" />
+    <None Include="GLSL\modelLoading.frag" />
+    <None Include="GLSL\modelLoading.vs" />
+    <None Include="GLSL\shadowShader.frag" />
+    <None Include="GLSL\shadowShader.vs" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <Filter>Main</Filter>
-    </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Main</Filter>
-    </ClCompile>
-    <ClCompile Include="SOIL2\etc1_utils.c">
-      <Filter>SOIL2</Filter>
-    </ClCompile>
-    <ClCompile Include="SOIL2\image_DXT.c">
-      <Filter>SOIL2</Filter>
-    </ClCompile>
-    <ClCompile Include="SOIL2\image_helper.c">
-      <Filter>SOIL2</Filter>
-    </ClCompile>
-    <ClCompile Include="SOIL2\SOIL2.c">
-      <Filter>SOIL2</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera\Camera.cpp">
-      <Filter>Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="Fisica\Luci\Directional_Light.cpp">
-      <Filter>Fisica\Luci</Filter>
-    </ClCompile>
-    <ClCompile Include="Fisica\Luci\Luce.cpp">
-      <Filter>Fisica\Luci</Filter>
-    </ClCompile>
-    <ClCompile Include="Fisica\Luci\Point_Light.cpp">
-      <Filter>Fisica\Luci</Filter>
-    </ClCompile>
-    <ClCompile Include="Fisica\Luci\Spot_Light.cpp">
-      <Filter>Fisica\Luci</Filter>
-    </ClCompile>
-    <ClCompile Include="Fisica\Shadows\Shadows.cpp">
-      <Filter>Fisica\Shadows</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh\Mesh.cpp">
-      <Filter>Mesh</Filter>
-    </ClCompile>
-    <ClCompile Include="Model\Model.cpp">
-      <Filter>Modelli</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture\Texture.cpp">
-      <Filter>Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader\Shader.cpp">
-      <Filter>Shader</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="GLSL\shadowShader.vs">
-      <Filter>GLSL</Filter>
-    </None>
-    <None Include="GLSL\shadowShader.frag">
-      <Filter>GLSL</Filter>
-    </None>
-    <None Include="GLSL\modelLoading.vs">
-      <Filter>GLSL</Filter>
-    </None>
-    <None Include="GLSL\modelLoading.frag">
-      <Filter>GLSL</Filter>
-    </None>
-    <None Include="GLSL\cubeMap.vs">
-      <Filter>GLSL</Filter>
-    </None>
-    <None Include="GLSL\cubeMap.frag">
-      <Filter>GLSL</Filter>
-    </None>
-    <None Include="GLSL\lamp.frag">
-      <Filter>GLSL</Filter>
-    </None>
-    <None Include="GLSL\lamp.vs">
-      <Filter>GLSL</Filter>
-    </None>
-    <None Include="GLSL\lighting.frag">
-      <Filter>GLSL</Filter>
-    </None>
-    <None Include="GLSL\lighting.vs">
-      <Filter>GLSL</Filter>
-    </None>
+    <ClInclude Include="Camera\Camera.h" />
+    <ClInclude Include="Fisica\Luci\Directional_Light.h" />
+    <ClInclude Include="Fisica\Luci\Luce.h" />
+    <ClInclude Include="Fisica\Luci\Point_Light.h" />
+    <ClInclude Include="Fisica\Luci\Spot_Light.h" />
+    <ClInclude Include="Fisica\Shadows\Shadows.h" />
+    <ClInclude Include="Mesh\Mesh.h" />
+    <ClInclude Include="Mesh\MeshLoader.h" />
+    <ClInclude Include="Model\Model.h" />
+    <ClInclude Include="Model\ModelLoader.h" />
+    <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\SceneList.h" />
+    <ClInclude Include="Shader\Shader.h" />
+    <ClInclude Include="Shader\ShaderLoader.h" />
+    <ClInclude Include="SOIL2\etc1_utils.h" />
+    <ClInclude Include="SOIL2\image_DXT.h" />
+    <ClInclude Include="SOIL2\image_helper.h" />
+    <ClInclude Include="SOIL2\jo_jpeg.h" />
+    <ClInclude Include="SOIL2\pkm_helper.h" />
+    <ClInclude Include="SOIL2\pvr_helper.h" />
+    <ClInclude Include="SOIL2\SOIL2.h" />
+    <ClInclude Include="SOIL2\stb_image.h" />
+    <ClInclude Include="SOIL2\stb_image_write.h" />
+    <ClInclude Include="SOIL2\stbi_DDS.h" />
+    <ClInclude Include="SOIL2\stbi_DDS_c.h" />
+    <ClInclude Include="SOIL2\stbi_ext.h" />
+    <ClInclude Include="SOIL2\stbi_ext_c.h" />
+    <ClInclude Include="SOIL2\stbi_pkm.h" />
+    <ClInclude Include="SOIL2\stbi_pkm_c.h" />
+    <ClInclude Include="SOIL2\stbi_pvr.h" />
+    <ClInclude Include="SOIL2\stbi_pvr_c.h" />
+    <ClInclude Include="Strutture\MeshStruct.h" />
+    <ClInclude Include="Texture\Texture.h" />
+    <ClInclude Include="Skybox\Skybox.h" />
   </ItemGroup>
 </Project>

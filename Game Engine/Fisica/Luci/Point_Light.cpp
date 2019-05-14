@@ -1,6 +1,6 @@
 #include "Point_Light.h"
 
-void PointLightSetter::SetPointLight(Shader shader, glm::vec3 position, GLuint index) {
+void PointLightSetter::SetPointLight(ShaderLoader shader, glm::vec3 position, GLuint index) {
 	std::string pre, mid, positio, ambient, diffuse, specular, constant, linear, quadratic;
 	std::stringstream ss;
 	ss << index;

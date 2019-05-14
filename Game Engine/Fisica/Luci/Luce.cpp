@@ -1,6 +1,6 @@
 #include "Luce.h"
 
-void LightSetter::SetLight(Shader shader, Camera camera, glm::mat4 projection, glm::vec3 lightColor, glm::vec3 position) {
+void LightSetter::SetLight(ShaderLoader shader, Camera camera, glm::mat4 projection, glm::vec3 lightColor, glm::vec3 position) {
 	glm::mat4 view = camera.GetViewMatrix();
 	GLint modelLoc = glGetUniformLocation(shader.program, "model");
 	GLint viewLoc = glGetUniformLocation(shader.program, "view");
