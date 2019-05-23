@@ -10,7 +10,7 @@ Model::Model(std::vector<std::string> paths) {
 	}
 }
 
-void Model::Draw(ShaderLoader shaderLoader, std::vector<glm::mat4> modelsPositions, Camera &camera) {
+void Model::Draw(ShaderLoader shaderLoader, std::vector<glm::mat4> modelsPositions, Camera &camera, unsigned int shadowMap) {
 	shaderLoader.use();
 	shaderLoader.SetVec3("viewPos", camera.getPosition().x, camera.getPosition().y, camera.getPosition().z);
 	shaderLoader.SetMat4("projection", camera.getProjection());
@@ -20,7 +20,7 @@ void Model::Draw(ShaderLoader shaderLoader, std::vector<glm::mat4> modelsPositio
 	GLuint i = 0;
 	for (it; it != this->Models.end(); it++, i++) {
 		shaderLoader.SetMat4("model", modelsPositions[i]);
-		it->second.Draw(shaderLoader);
+		it->second.Draw(shaderLoader, shadowMap);
 	}
 }
 

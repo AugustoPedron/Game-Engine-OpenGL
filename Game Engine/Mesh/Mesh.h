@@ -19,8 +19,9 @@ class Mesh {
 public:
 	Mesh() {};
 	Mesh(std::vector<MeshStruct> Meshes);
-	void Draw(ShaderLoader shaderLoader, std::vector<glm::mat4> meshesPositions, Camera &camera);
+	void Draw(ShaderLoader shaderLoader, std::vector<glm::mat4> meshesPositions, Camera &camera, unsigned int shadowMap);
 	void DeleteMeshes();
+	std::vector<MeshLoader>& getMeshes() { return this->Meshes; }
 
 private:
 	std::vector<MeshLoader> Meshes;

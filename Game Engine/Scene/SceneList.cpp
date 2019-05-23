@@ -34,7 +34,7 @@ void SceneList::selectScene(GLuint number) {
 			 0.5f,  0.5f, -0.5f,  0.0f,  0.0f,  -1.0f,  1.0f, 1.0f,
 			-0.5f, -0.5f, -0.5f,  0.0f,  0.0f,  -1.0f,  0.0f, 0.0f,
 			-0.5f,  0.5f, -0.5f,  0.0f,  0.0f,  -1.0f,  0.0f, 1.0f,
-			
+
 			// Front face
 			-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f, 0.0f,
 			 0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f, 0.0f,
@@ -99,7 +99,51 @@ void SceneList::selectScene(GLuint number) {
 		SceneComp.Meshes.push_back(mesh);
 
 		glm::mat4 model(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 5.0f));
+		
+		model = glm::translate(model, glm::vec3(0.0f, -0.4f, 3.0f));
+		model = glm::scale(model, glm::vec3(2.0f));
+		this->MeshesPositions.push_back(model);
+
+		GLfloat pianoVertices[] = {
+		   -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,
+			0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
+			0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 1.0f,
+			0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
+		   -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,
+		   -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f
+		};
+
+		Vertices.clear();
+
+		for (GLuint i = 0; i < 48;) {
+			glm::vec3 vec1(0.0f);
+			vec1.x = pianoVertices[i++];
+			vec1.y = pianoVertices[i++];
+			vec1.z = pianoVertices[i++];
+
+			glm::vec3 vec2(0.0f);
+			vec2.x = pianoVertices[i++];
+			vec2.y = pianoVertices[i++];
+			vec2.z = pianoVertices[i++];
+
+			glm::vec2 vec3(0.0f);
+			vec3.x = pianoVertices[i++];
+			vec3.y = pianoVertices[i++];
+
+			Vertex v;
+			v.Position = vec1;
+			v.Normal = vec2;
+			v.TexCoords = vec3;
+
+			Vertices.push_back(v);
+		}
+
+		mesh.Vertices = Vertices;
+		SceneComp.Meshes.push_back(mesh);
+
+		model= glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(20.0f));
+		model = glm::translate(model, glm::vec3(0.0f, -0.59f, 0.0f));
 		this->MeshesPositions.push_back(model);
 #pragma endregion
 
@@ -165,16 +209,30 @@ void SceneList::selectScene(GLuint number) {
 		SceneComp.Shaders.push_back("modelLoading");
 		SceneComp.Shaders.push_back("cubeMap");
 		SceneComp.Shaders.push_back("shadowShader");
+		SceneComp.Shaders.push_back("shadowShaderDebug");
 
 #pragma endregion
 
 #pragma region Models
+
+		/*SceneComp.Models.push_back("../Game Engine/Resources/models/prova2.obj");
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, -1.75f, 0.0f));
+		//model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
+		this->ModelsPositions.push_back(model);
+
+		SceneComp.Models.push_back("../Game Engine/Resources/models/castello.obj");
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, -10.0f, 20.0f));
+		//model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
+		this->ModelsPositions.push_back(model);*/
 
 		SceneComp.Models.push_back("../Game Engine/Resources/models/nanosuit/nanosuit.obj");
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0.0f, -1.75f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
 		this->ModelsPositions.push_back(model);
+
 
 #pragma endregion
 	}

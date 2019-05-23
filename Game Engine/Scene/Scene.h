@@ -8,6 +8,7 @@
 #include "../Mesh/Mesh.h"
 #include "../Camera/Camera.h"
 #include "../Skybox/Skybox.h"
+#include "../Fisica/Shadows/Shadows.h"
 
 class Scene {
 public:
@@ -24,4 +25,5 @@ private:
 	Shader _Shaders;
 	Skybox _Skybox;
 	Camera &_camera;
+	Shadow _Shadow;
 };

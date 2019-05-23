@@ -1,40 +1,32 @@
 #pragma once
-
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <vector>
 #include <iostream>
-
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <assimp/types.h>
+#include "../../Shader/ShaderLoader.h"
+#include "../../Model/Model.h"
+#include "../../Mesh/Mesh.h"
 
-namespace ShadowSetter {
-	/*
+class Shadow {
+private:
 	const int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
-	//inline int getDepthMapFBO() { return depthMapFBO; }
-	//inline int getDepthMap() { return depthMap; }
-	
-	class Shadow {
-	private:
-		unsigned int depthMapFBO;
-		unsigned int depthMap;
-		GLuint VAO;
-		GLuint textureID;
-		std::shared_ptr<ShaderLoader> shader;
-		void SetShadow();
+	unsigned int depthMapFBO;
+	unsigned int depthMap;
+	unsigned int quadVAO;
+	unsigned int quadVBO;
 
-	public:
-		Shadow(GLuint textureID, GLuint VAO);
-		void DrawShadows(glm::mat4 model);
-		inline int getShadowWidth() { return SHADOW_WIDTH; }
-		inline int getShadowHeight() { return SHADOW_HEIGHT; }
-		//inline void setTextureID(GLuint texID) { textureID = texID; }
-		unsigned int getDepthMap();
-		unsigned int getDepthMapFBO();
-	};
-*/
-}
+public:
+	Shadow();
+	void DrawShadows(ShaderLoader shadowShader, Mesh &Meshes, Model &Models,
+	const std::vector<glm::mat4> &MeshesPositions, const std::vector<glm::mat4> &ModelsPositions, Camera &camera);
+	void DrawShadowsDebug(ShaderLoader shadowShader);
+	inline int getShadowWidth() { return SHADOW_WIDTH; }
+	inline int getShadowHeight() { return SHADOW_HEIGHT; }
+	inline unsigned int getDepthMap() { return this->depthMap; }
+};

@@ -8,7 +8,7 @@ layout ( location = 2 ) in vec2 texCoords;
 out vec3 Normal;
 out vec3 FragPos;
 out vec2 TexCoords;
-//out vec4 FragPosLightSpace;
+out vec4 FragPosLightSpace;
 
 //valori che vengono passati in fase di definizione degli attributi
 uniform mat4 model;
@@ -22,5 +22,5 @@ void main( )
 	FragPos = vec3( model * vec4( position, 1.0 ));
 	Normal = ( transpose ( inverse ( mat3( model) ))) * normal;
 	TexCoords = texCoords;
-	//FragPosLightSpace = lightSpaceMatrix * vec4( FragPos, 1.0 );
+	FragPosLightSpace = lightSpaceMatrix * vec4( FragPos, 1.0 );
 }

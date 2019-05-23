@@ -4,9 +4,9 @@ ModelLoader::ModelLoader(const GLchar *path) {
 	this->loadModel(path);
 }
 
-void ModelLoader::Draw(ShaderLoader shader) {
+void ModelLoader::Draw(ShaderLoader shader, unsigned int shadowMap) {
 	for (GLuint i = 0; i < this->meshes.size(); i++) {
-		this->meshes[i].Draw(shader);
+		this->meshes[i].Draw(shader, shadowMap);
 	}
 }
 

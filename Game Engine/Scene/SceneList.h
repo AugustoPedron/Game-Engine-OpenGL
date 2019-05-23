@@ -17,14 +17,13 @@ struct SceneComponents {
 class SceneList {
 private:
 	SceneComponents SceneComp;
-	
 	std::vector<glm::mat4> ModelsPositions;
+	std::vector<glm::mat4> MeshesPositions;
 
 public :
 	SceneList() {};
 	SceneComponents getSceneComp();
 	std::vector<glm::mat4> getMeshesPositions();
 	std::vector<glm::mat4> getModelsPositions();
-	std::vector<glm::mat4> MeshesPositions;
 	void selectScene(GLuint number);
 };

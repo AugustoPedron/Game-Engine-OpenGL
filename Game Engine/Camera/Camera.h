@@ -17,6 +17,8 @@ const GLfloat PITCH = 0.0f;
 const GLfloat SPEED = 6.0f;
 const GLfloat SENS = 0.25f;
 const GLfloat ZOOM = 45.0f;
+const float near_plane = 1.0f, far_plane = 150.0f;
+const glm::vec3 lightPos(20.0f, 100.0f, 30.0f);
 
 class Camera {
 public:
@@ -31,6 +33,9 @@ public:
 	glm::mat4 GetViewMatrix();
 	glm::vec3 getFront();
 	glm::mat4 getProjection();
+	inline int getScrWidth() { return this->screen_width; }
+	inline int getScrHeight() { return this->screen_height; }
+	inline glm::mat4 getLightSpaceMatrix() { return this->lightSpaceMatrix; }
 
 private:
 	glm::vec3 position;
@@ -39,6 +44,7 @@ private:
 	glm::vec3 right;
 	glm::vec3 worldUp;
 	glm::mat4 projection;
+	glm::mat4 lightSpaceMatrix;
 	GLfloat yaw;
 	GLfloat pitch;
 	GLfloat mouseSens;

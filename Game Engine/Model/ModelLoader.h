@@ -18,14 +18,14 @@ class ModelLoader {
 public:
 	ModelLoader() {};
 	ModelLoader(const GLchar *path);
-	void Draw(ShaderLoader shader);
+	void Draw(ShaderLoader shader, unsigned int shadowMap);
 	void DeleteModel();
+	inline std::vector<MeshLoader>& getMeshes() { return this->meshes; }
 
 private:
 	std::string directory;
 	std::vector<MeshLoader> meshes;
 	std::vector<structTexture> textures_loaded;
-
 	void loadModel(std::string path);
 	void processNode(aiNode *node, const aiScene *scene);
 	MeshLoader processMesh(aiMesh *mesh, const aiScene *scene);

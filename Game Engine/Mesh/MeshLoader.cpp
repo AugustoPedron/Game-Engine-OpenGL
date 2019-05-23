@@ -11,14 +11,14 @@ MeshLoader::MeshLoader(std::vector<Vertex> vertices, const GLchar* texture_diffu
 	this->diffuseMap = TextureLoader::LoadTexture(texture_diffuse);
 	this->specularMap = TextureLoader::LoadTexture(texture_specular);
 	this->vertices = vertices;
-	//this->shadow = nullptr;
 	this->SetupMeshNoIndices();
 }
 
-void MeshLoader::Draw(ShaderLoader shader) {
+void MeshLoader::Draw(ShaderLoader shader, unsigned int shadowMap) {
 	GLuint diffuseNr = 1;
 	GLuint specularNr = 1;
-	for (GLuint i = 0; i < this->textures.size(); i++) {
+	GLuint i;
+	for (i = 0; i < this->textures.size(); i++) {
 		//viene attivata una texture e si specifica quale indice ha
 		glActiveTexture(GL_TEXTURE0 + i);
 
@@ -40,27 +40,25 @@ void MeshLoader::Draw(ShaderLoader shader) {
 	}
 
 	shader.Set1f("material.shininess", 16.0f);
+
+	shader.Set1i("shadowMap", i);
+	glBindTexture(GL_TEXTURE_2D, shadowMap);
+
 	glBindVertexArray(this->VAO);
 	//disegna i vertici del VAO per triangoli usando la rappresentazione indicizzata
 	glDrawElements(GL_TRIANGLES, this->indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 	//disattiva le texture attivate in precedenza
-	for (GLuint i = 0; i < this->textures.size(); i++) {
+	for (GLuint i = 0; i < this->textures.size()+1; i++) {
 		glActiveTexture(GL_TEXTURE0 + i);
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }
 //fa la stessa cosa di prima ma senza usare gl indici per i vertici.
-void MeshLoader::DrawNoIndices(ShaderLoader shader) {
-	/*if (this->shadow == nullptr) {
-		this->shadow = std::make_shared<ShadowSetter::Shadow>(this->diffuseMap, this->VAO);
-	}
-
-	this->shadow->DrawShadows(model);*/
-
+void MeshLoader::DrawNoIndices(ShaderLoader shader, unsigned int shadowMap) {
 	shader.Set1i("material.diffuse", 0);
 	shader.Set1i("material.specular", 1);
-	//shader.Set1i("material.shadowMap", 2);
+	shader.Set1i("material.shadowMap", 2);
 	shader.Set1f("material.shininess", 32.0f);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, this->diffuseMap);
@@ -68,8 +66,8 @@ void MeshLoader::DrawNoIndices(ShaderLoader shader) {
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, this->specularMap);
 
-	/*glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, this->shadow->getDepthMap());*/
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, shadowMap);
 
 	glBindVertexArray(this->VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 36);

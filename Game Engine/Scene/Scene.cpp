@@ -14,8 +14,12 @@ void Scene::loadScene(GLuint number)
 }
 
 void Scene::drawScene() {
-	this->_Models.Draw(this->_Shaders.getShaders("modelLoading"), this->_SL.getModelsPositions(), _camera);
-	this->_Meshes.Draw(this->_Shaders.getShaders("lighting"), this->_SL.getMeshesPositions(), _camera);
+	this->_Shadow.DrawShadows(this->_Shaders.getShaders("shadowShader"), this->_Meshes, this->_Models, this->_SL.getMeshesPositions(), this->_SL.getModelsPositions(),this->_camera);	
+	glViewport(0, 0, _camera.getScrWidth(), _camera.getScrHeight());
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//this->_Shadow.DrawShadowsDebug(this->_Shaders.getShaders("shadowShaderDebug"));
+	this->_Models.Draw(this->_Shaders.getShaders("modelLoading"), this->_SL.getModelsPositions(), _camera, this->_Shadow.getDepthMap());
+	this->_Meshes.Draw(this->_Shaders.getShaders("lighting"), this->_SL.getMeshesPositions(), _camera, this->_Shadow.getDepthMap());
 	this->_Skybox.Draw(this->_Shaders.getShaders("cubeMap"), _camera);
 }
 

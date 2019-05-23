@@ -9,6 +9,10 @@ Camera::Camera(int screen_width, int screen_height, glm::vec3 position, glm::vec
 	this->screen_height = screen_height;
 	this->screen_width = screen_width;
 	this->projection = glm::perspective(this->zoom, (GLfloat)this->screen_width / (GLfloat)this->screen_height, 0.1f, 1000.0f);
+	glm::mat4 lightView, lightProjection;
+	lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+	lightView = glm::lookAt(lightPos, glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	this->lightSpaceMatrix = lightProjection * lightView;
 	this->updateCameraVectors();
 }
 

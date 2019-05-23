@@ -21,7 +21,6 @@ GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
 Camera camera;
 
-glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 glm::vec3 lightColor(1.0f);
 
 int main() {
@@ -59,7 +58,7 @@ int main() {
 		return EXIT_FAILURE;
 	}
 
-	glEnable(GL_BLEND);
+	//glEnable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
@@ -74,7 +73,6 @@ int main() {
 	//loop dove vengono disegnati gli oggetti e gestiti i comandi
 
 	while (!glfwWindowShouldClose(window)) {
-		scene.getSL().MeshesPositions[0] = glm::translate(scene.getSL().MeshesPositions[0], glm::vec3(0.0f,0.2f,0.0f));
 		//delta time rappresenta la durata dell'ultimo frame, moltiplicando ad esempio la velcità con cui si sposta un oggetto nel tempo per il delta time, si rende il movimento indipendente dal tempo impiegato
 		//per la creazione del frame
 		frames++;
