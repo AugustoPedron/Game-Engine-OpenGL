@@ -12,6 +12,6 @@ private:
 public:
 	Skybox() {};
 	Skybox(SkyboxStruct Skybox);
-	void Draw(ShaderLoader shader, Camera &camera);
+	void Draw(ShaderLoader* shader, Camera &camera);
 	void DeleteSkybox();
 };

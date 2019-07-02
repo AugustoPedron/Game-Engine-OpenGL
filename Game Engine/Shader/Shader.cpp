@@ -8,6 +8,6 @@ Shader::Shader(std::vector<std::string> shaders) {
 	}
 }
 
-ShaderLoader Shader::getShaders(std::string shaderName) {
-	return this->Shaders.at(shaderName);
+ShaderLoader* Shader::getShaders(std::string shaderName) {
+	return &this->Shaders.at(shaderName);
 }

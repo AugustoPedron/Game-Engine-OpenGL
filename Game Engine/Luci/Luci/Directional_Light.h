@@ -7,5 +7,5 @@
 #include "../../Shader/ShaderLoader.h"
 
 namespace DirectionalLightSetter {
-	void SetDirectionalLight(ShaderLoader shader);
+	void SetDirectionalLight(ShaderLoader* shader);
 }

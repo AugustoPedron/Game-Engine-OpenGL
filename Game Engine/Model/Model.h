@@ -2,15 +2,17 @@
 
 #include "ModelLoader.h"
 #include "../Camera/Camera.h"
-#include "../Fisica/Luci/Spot_Light.h"
-#include "../Fisica/Luci/Directional_Light.h"
-#include "../Fisica/Luci/Point_Light.h"
+#include "../Luci/Luci/Spot_Light.h"
+#include "../Luci/Luci/Directional_Light.h"
+#include "../Luci/Luci/Point_Light.h"
+#include "../Collision Detection/Octree/Octree.h"
+#include "../Strutture/SceneStruct.h"
 
 class Model {
 public:
 	Model() {};
-	Model(std::vector<std::string> paths);
-	void Draw(ShaderLoader shaderLoader, std::vector<glm::mat4> modelsPositions, Camera &camera, unsigned int shadowMap);
+	Model(std::vector<ModelDefinition> models, Octree *octree);
+	void Draw(ShaderLoader* shaderLoader, Camera &camera, unsigned int shadowMap);
 	void DeleteModels();
 	inline std::map<const GLchar*, ModelLoader>& getModels() { return this->Models; }
 
