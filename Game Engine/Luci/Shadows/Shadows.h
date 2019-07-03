@@ -12,6 +12,7 @@
 #include "../../Shader/ShaderLoader.h"
 #include "../../Model/Model.h"
 #include "../../Mesh/Mesh.h"
+#include "../../Strutture/SceneStruct.h"
 
 class Shadow {
 private:
@@ -23,8 +24,7 @@ private:
 
 public:
 	Shadow();
-	void DrawShadows(ShaderLoader shadowShader, Mesh &Meshes, Model &Models,
-	const std::vector<glm::mat4> &MeshesPositions, const std::vector<glm::mat4> &ModelsPositions, Camera &camera);
+	void DrawShadows(ShaderLoader* shadowShader, Mesh* Meshes, Model* Models, Camera &camera);
 	void DrawShadowsDebug(ShaderLoader shadowShader);
 	inline int getShadowWidth() { return SHADOW_WIDTH; }
 	inline int getShadowHeight() { return SHADOW_HEIGHT; }

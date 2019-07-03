@@ -4,13 +4,9 @@ SceneComponents SceneList::getSceneComp() {
 	return this->SceneComp;
 }
 
-std::vector<glm::mat4> SceneList::getMeshesPositions() {
-	return this->MeshesPositions;
-}
-
-std::vector<glm::mat4> SceneList::getModelsPositions() {
+/*std::vector<glm::mat4> SceneList::getModelsPositions() {
 	return this->ModelsPositions;
-}
+}*/
 
 void SceneList::selectScene(GLuint number) {
 	switch (number)
@@ -20,10 +16,10 @@ void SceneList::selectScene(GLuint number) {
 
 #pragma region Meshes
 
-		MeshStruct mesh;
+		/*MeshDefinition MeD;
 
-		mesh.texture_diffuse = "../Game Engine/Resources/assets/container2.png";
-		mesh.texture_specular = "../Game Engine/Resources/assets/container2_specular.png";
+		MeD.mesh.texture_diffuse = "../Game Engine/Resources/assets/container2.png";
+		MeD.mesh.texture_specular = "../Game Engine/Resources/assets/container2_specular.png";
 
 		std::vector<Vertex> Vertices;
 		GLfloat vertices[] = {
@@ -95,14 +91,16 @@ void SceneList::selectScene(GLuint number) {
 			Vertices.push_back(v);
 		}
 
-		mesh.Vertices = Vertices;
-		SceneComp.Meshes.push_back(mesh);
+		MeD.mesh.Vertices = Vertices;
+		MeD.position = glm::mat4(1.0f);
+		MeD.position = glm::translate(MeD.position, glm::vec3(0.0f, -0.4f, 3.0f));
+		MeD.position = glm::scale(MeD.position, glm::vec3(2.0f));
 
-		glm::mat4 model(1.0f);
-		
-		model = glm::translate(model, glm::vec3(0.0f, -0.4f, 3.0f));
-		model = glm::scale(model, glm::vec3(2.0f));
-		this->MeshesPositions.push_back(model);
+		SceneComp.Meshes.push_back(MeD);
+
+
+
+		//this->MeshesPositions.push_back(model);
 
 		GLfloat pianoVertices[] = {
 		   -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,
@@ -138,13 +136,14 @@ void SceneList::selectScene(GLuint number) {
 			Vertices.push_back(v);
 		}
 
-		mesh.Vertices = Vertices;
-		SceneComp.Meshes.push_back(mesh);
+		MeD.mesh.Vertices = Vertices;
 
-		model= glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(20.0f));
-		model = glm::translate(model, glm::vec3(0.0f, -0.59f, 0.0f));
-		this->MeshesPositions.push_back(model);
+		MeD.position = glm::mat4(1.0f);
+		MeD.position = glm::scale(MeD.position, glm::vec3(20.0f));
+		MeD.position = glm::translate(MeD.position, glm::vec3(0.0f, -0.59f, 0.0f));
+		SceneComp.Meshes.push_back(MeD);
+
+		//this->MeshesPositions.push_back(model);*/
 #pragma endregion
 
 #pragma region Skybox
@@ -215,6 +214,8 @@ void SceneList::selectScene(GLuint number) {
 
 #pragma region Models
 
+		ModelDefinition MD;
+
 		/*SceneComp.Models.push_back("../Game Engine/Resources/models/prova2.obj");
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0.0f, -1.75f, 0.0f));
@@ -227,11 +228,25 @@ void SceneList::selectScene(GLuint number) {
 		//model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
 		this->ModelsPositions.push_back(model);*/
 
-		SceneComp.Models.push_back("../Game Engine/Resources/models/nanosuit/nanosuit.obj");
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, -1.75f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
-		this->ModelsPositions.push_back(model);
+		/*MD.path = "../Game Engine/Resources/models/nanosuit/nanosuit.obj";
+		MD.position = glm::mat4(1.0f);
+		MD.position = glm::translate(MD.position, glm::vec3(0.0f, -1.75f, 0.0f));
+		MD.position = glm::scale(MD.position, glm::vec3(0.2f, 0.2f, 0.2f));
+		SceneComp.Models.push_back(MD);*/
+
+		MD.path = "../Game Engine/Resources/models/cubo.obj";
+		MD.position = glm::mat4(1.0f);
+		MD.positionPhy = glm::vec3(0.0f, -1.75f, 0.0f);
+		MD.position = glm::translate(MD.position, MD.positionPhy);	
+		//MD.position = glm::scale(MD.position, glm::vec3(0.2f, 0.2f, 0.2f));
+		SceneComp.Models.push_back(MD);
+
+		MD.path = "../Game Engine/Resources/models/cubo.obj";
+		MD.position = glm::mat4(1.0f);
+		MD.positionPhy = glm::vec3(0.0f, 1.75f, 0.0f);
+		MD.position = glm::translate(MD.position, MD.positionPhy);	
+		//MD.position = glm::scale(MD.position, glm::vec3(0.2f, 0.2f, 0.2f));
+		SceneComp.Models.push_back(MD);
 
 
 #pragma endregion

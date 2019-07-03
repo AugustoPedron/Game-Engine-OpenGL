@@ -1,20 +1,21 @@
 #include "MeshLoader.h"
 //creazione della mesh per un modello esportato in formato obj
-MeshLoader::MeshLoader(std::vector<Vertex> vertices, std::vector<GLuint> indices, std::vector<structTexture> textures) {
+MeshLoader::MeshLoader(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<structTexture>& textures) {
 	this->vertices = vertices;
 	this->indices = indices;
 	this->textures = textures;
 	this->SetupMesh();
 }
 //creazione della mesh tramite vertici (scritti a mano) e texture
-MeshLoader::MeshLoader(std::vector<Vertex> vertices, const GLchar* texture_diffuse, const GLchar* texture_specular) {
-	this->diffuseMap = TextureLoader::LoadTexture(texture_diffuse);
-	this->specularMap = TextureLoader::LoadTexture(texture_specular);
-	this->vertices = vertices;
+MeshLoader::MeshLoader(MeshDefinition& Mesh) {
+	this->position = Mesh.position;
+	this->diffuseMap = TextureLoader::LoadTexture(Mesh.mesh.texture_diffuse.c_str());
+	this->specularMap = TextureLoader::LoadTexture(Mesh.mesh.texture_specular.c_str());
+	this->vertices = Mesh.mesh.Vertices;
 	this->SetupMeshNoIndices();
 }
 
-void MeshLoader::Draw(ShaderLoader shader, unsigned int shadowMap) {
+void MeshLoader::Draw(ShaderLoader* shader, unsigned int shadowMap) {
 	GLuint diffuseNr = 1;
 	GLuint specularNr = 1;
 	GLuint i;
@@ -34,14 +35,14 @@ void MeshLoader::Draw(ShaderLoader shader, unsigned int shadowMap) {
 		}
 
 		number = ss.str();
-		shader.Set1i((name + number).c_str(), i);
+		shader->Set1i((name + number).c_str(), i);
 		//si collega all'indice specificato prima la texture da stampare
 		glBindTexture(GL_TEXTURE_2D, this->textures[i].id);
 	}
 
-	shader.Set1f("material.shininess", 16.0f);
+	shader->Set1f("material.shininess", 16.0f);
 
-	shader.Set1i("shadowMap", i);
+	shader->Set1i("shadowMap", i);
 	glBindTexture(GL_TEXTURE_2D, shadowMap);
 
 	glBindVertexArray(this->VAO);
@@ -55,11 +56,12 @@ void MeshLoader::Draw(ShaderLoader shader, unsigned int shadowMap) {
 	}
 }
 //fa la stessa cosa di prima ma senza usare gl indici per i vertici.
-void MeshLoader::DrawNoIndices(ShaderLoader shader, unsigned int shadowMap) {
-	shader.Set1i("material.diffuse", 0);
-	shader.Set1i("material.specular", 1);
-	shader.Set1i("material.shadowMap", 2);
-	shader.Set1f("material.shininess", 32.0f);
+void MeshLoader::DrawNoIndices(ShaderLoader* shader, unsigned int shadowMap) {
+	shader->SetMat4("model", this->position);
+	shader->Set1i("material.diffuse", 0);
+	shader->Set1i("material.specular", 1);
+	shader->Set1i("material.shadowMap", 2);
+	shader->Set1f("material.shininess", 32.0f);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, this->diffuseMap);
 
@@ -154,4 +156,8 @@ void MeshLoader::DeleteMesh() {
 	glDeleteVertexArrays(1, &this->VAO);
 	glDeleteBuffers(1, &this->VBO);
 	glDeleteBuffers(1, &this->EBO);
+	std::vector<Vertex>().swap(this->vertices);
+	std::vector<GLuint>().swap(this->indices);
+	std::vector<structTexture>().swap(this->textures);
+	
 }

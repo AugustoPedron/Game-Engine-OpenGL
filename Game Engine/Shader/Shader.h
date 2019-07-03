@@ -10,5 +10,5 @@ private:
 public:
 	Shader() {};
 	Shader(std::vector<std::string> shaders);
-	ShaderLoader getShaders(std::string shaderName);
+	ShaderLoader* getShaders(std::string shaderName);
 };

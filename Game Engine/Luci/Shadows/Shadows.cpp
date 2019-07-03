@@ -36,19 +36,18 @@ Shadow::Shadow() {
 	glBindVertexArray(0);
 }
 
-void Shadow::DrawShadows(ShaderLoader shadowShader, Mesh &Meshes, Model &Models,
-	const std::vector<glm::mat4> &MeshesPositions, const std::vector<glm::mat4> &ModelsPositions, Camera &camera) {
+void Shadow::DrawShadows(ShaderLoader* shadowShader, Mesh* Meshes, Model* Models, Camera &camera) {
 	glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
-	shadowShader.use();
-	shadowShader.SetMat4("lightSpaceMatrix", camera.getLightSpaceMatrix());
+	shadowShader->use();
+	shadowShader->SetMat4("lightSpaceMatrix", camera.getLightSpaceMatrix());
 
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->depthMapFBO);
 	glClear(GL_DEPTH_BUFFER_BIT);
 	GLuint i = 0;
-	if (!Meshes.getMeshes().empty()) {
-		std::vector<MeshLoader>::iterator it = Meshes.getMeshes().begin();
-		for (it; it != Meshes.getMeshes().end(); it++, i++) {
-			shadowShader.SetMat4("model", MeshesPositions[i]);
+	if (!Meshes->getMeshes().empty()) {
+		std::vector<MeshLoader>::iterator it = Meshes->getMeshes().begin();
+		for (it; it != Meshes->getMeshes().end(); it++, i++) {
+			shadowShader->SetMat4("model", it->getPosition());
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, it->getDiffuseMap());
 			glBindVertexArray(it->getVAO());
@@ -64,10 +63,10 @@ void Shadow::DrawShadows(ShaderLoader shadowShader, Mesh &Meshes, Model &Models,
 	}
 
 	GLuint k = 0;
-	if (!Models.getModels().empty()) {
-		std::map<const GLchar*, ModelLoader>::iterator it2 = Models.getModels().begin();
-		for (it2; it2 != Models.getModels().end(); it2++, k++) {
-			shadowShader.SetMat4("model", ModelsPositions[k]);
+	if (!Models->getModels().empty()) {
+		std::map<const GLchar*, ModelLoader>::iterator it2 = Models->getModels().begin();
+		for (it2; it2 != Models->getModels().end(); it2++, k++) {
+			shadowShader->SetMat4("model", it2->second.getPosition());
 			for (GLuint j = 0; j < it2->second.getMeshes().size(); j++) {
 				GLuint diffuseNr = 1;
 				for (i = 0; i < it2->second.getMeshes()[j].getTextures().size(); i++) {

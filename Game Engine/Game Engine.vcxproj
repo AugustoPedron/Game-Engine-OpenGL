@@ -122,11 +122,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera\Camera.cpp" />
-    <ClCompile Include="Fisica\Luci\directional_light.cpp" />
-    <ClCompile Include="Fisica\Luci\Luce.cpp" />
-    <ClCompile Include="Fisica\Luci\Point_Light.cpp" />
-    <ClCompile Include="Fisica\Luci\Spot_Light.cpp" />
-    <ClCompile Include="Fisica\Shadows\Shadows.cpp" />
+    <ClCompile Include="Collision Detection\Octree\Octree.cpp" />
+    <ClCompile Include="Fisica\Fisica.cpp" />
+    <ClCompile Include="Luci\Luci\directional_light.cpp" />
+    <ClCompile Include="Luci\Luci\Luce.cpp" />
+    <ClCompile Include="Luci\Luci\Point_Light.cpp" />
+    <ClCompile Include="Luci\Luci\Spot_Light.cpp" />
+    <ClCompile Include="Luci\Shadows\Shadows.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mesh\Mesh.cpp" />
     <ClCompile Include="Mesh\MeshLoader.cpp" />
@@ -159,11 +161,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera\Camera.h" />
-    <ClInclude Include="Fisica\Luci\Directional_Light.h" />
-    <ClInclude Include="Fisica\Luci\Luce.h" />
-    <ClInclude Include="Fisica\Luci\Point_Light.h" />
-    <ClInclude Include="Fisica\Luci\Spot_Light.h" />
-    <ClInclude Include="Fisica\Shadows\Shadows.h" />
+    <ClInclude Include="Collision Detection\Octree\Octree.h" />
+    <ClInclude Include="Fisica\Fisica.h" />
+    <ClInclude Include="Luci\Luci\Directional_Light.h" />
+    <ClInclude Include="Luci\Luci\Luce.h" />
+    <ClInclude Include="Luci\Luci\Point_Light.h" />
+    <ClInclude Include="Luci\Luci\Spot_Light.h" />
+    <ClInclude Include="Luci\Shadows\Shadows.h" />
     <ClInclude Include="Mesh\Mesh.h" />
     <ClInclude Include="Mesh\MeshLoader.h" />
     <ClInclude Include="Model\Model.h" />
@@ -191,6 +195,7 @@
     <ClInclude Include="SOIL2\stb_image.h" />
     <ClInclude Include="SOIL2\stb_image_write.h" />
     <ClInclude Include="Strutture\MeshStruct.h" />
+    <ClInclude Include="Strutture\SceneStruct.h" />
     <ClInclude Include="Texture\Texture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

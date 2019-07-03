@@ -13,14 +13,14 @@ Skybox::Skybox(SkyboxStruct Skybox) {
 	this->skyboxTexture = TextureLoader::LoadSkyboxMap(Skybox.Textures);
 }
 
-void Skybox::Draw(ShaderLoader shader, Camera &camera) {
+void Skybox::Draw(ShaderLoader* shader, Camera &camera) {
 	glDepthFunc(GL_LEQUAL);
 
-	shader.use();
-
-	shader.Set1i("skybox", 0);
-	shader.SetMat4("view", glm::mat4(glm::mat3(camera.GetViewMatrix())));
-	shader.SetMat4("projection", camera.getProjection());
+	shader->use();
+		 
+	shader->Set1i("skybox", 0);
+	shader->SetMat4("view", glm::mat4(glm::mat3(camera.GetViewMatrix())));
+	shader->SetMat4("projection", camera.getProjection());
 	glBindVertexArray(this->VAO);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, this->skyboxTexture);

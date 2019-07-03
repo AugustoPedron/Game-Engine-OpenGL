@@ -1,18 +1,24 @@
 #include "ModelLoader.h"
-//https://learnopengl.com/Model-Loading/Model
-ModelLoader::ModelLoader(const GLchar *path) {
-	this->loadModel(path);
+
+ModelLoader::ModelLoader(ModelDefinition model, GLuint id) {
+	this->id = id;
+	this->moving = 0;
+	this->position = model.position;
+	this->positionPhy = model.positionPhy;
+	this->path = model.path;
+	this->loadModel();
 }
 
-void ModelLoader::Draw(ShaderLoader shader, unsigned int shadowMap) {
+void ModelLoader::Draw(ShaderLoader* shader, unsigned int shadowMap) {
 	for (GLuint i = 0; i < this->meshes.size(); i++) {
+		shader->SetMat4("model", this->position);
 		this->meshes[i].Draw(shader, shadowMap);
 	}
 }
 
-void ModelLoader::loadModel(std::string path) {
+void ModelLoader::loadModel() {
 	Assimp::Importer importer;
-	const aiScene *scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+	const aiScene *scene = importer.ReadFile(this->path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices);
 
 	if (!scene || scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
 		std::cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << std::endl;
@@ -26,7 +32,8 @@ void ModelLoader::loadModel(std::string path) {
 void ModelLoader::processNode(aiNode *node, const aiScene *scene) {
 	for (GLuint i = 0; i < node->mNumMeshes; i++) {
 		aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-		this->meshes.push_back(this->processMesh(mesh, scene));
+		MeshLoader ML = this->processMesh(mesh, scene);
+		this->meshes.push_back(ML);
 	}
 
 	for (GLuint i = 0; i < node->mNumChildren; i++) {
@@ -45,6 +52,15 @@ MeshLoader ModelLoader::processMesh(aiMesh *mesh, const aiScene *scene) {
 		vector.x = mesh->mVertices[i].x;
 		vector.y = mesh->mVertices[i].y;
 		vector.z = mesh->mVertices[i].z;
+		/*if (mesh->mVertices[i].x > maxx) maxx = mesh->mVertices[i].x;
+		if (mesh->mVertices[i].x < minx) minx = mesh->mVertices[i].x;
+
+		if (mesh->mVertices[i].y > maxy) maxy = mesh->mVertices[i].y;
+		if (mesh->mVertices[i].y < miny) miny = mesh->mVertices[i].y;
+
+		if (mesh->mVertices[i].z > maxz) maxz = mesh->mVertices[i].z;
+		if (mesh->mVertices[i].z < minz) minz = mesh->mVertices[i].z;*/
+
 		vertex.Position = vector;
 
 		vector.x = mesh->mNormals[i].x;
@@ -80,6 +96,10 @@ MeshLoader ModelLoader::processMesh(aiMesh *mesh, const aiScene *scene) {
 		std::vector<structTexture> specularMaps = this->loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	}
+
+	/*maxx >= minx * -1 ? diffx = maxx : diffx = minx * -1;
+	maxy >= miny * -1 ? diffy = maxy : diffy = miny * -1;
+	maxz >= minz * -1 ? diffz = maxz : diffz = minz * -1;*/
 
 	return MeshLoader(vertices, indices, textures);
 }
@@ -139,4 +159,12 @@ void ModelLoader::DeleteModel() {
 	for (it; it != this->meshes.end(); it++) {
 		it->DeleteMesh();
 	}
+	std::vector<MeshLoader>().swap(this->meshes);
+	std::vector<structTexture>().swap(this->textures_loaded);
+}
+
+void ModelLoader::updatePosition(glm::vec3 translation) {
+	this->positionPhy += translation;
+	this->position = glm::translate(this->position, translation);
+	this->moving = 1;
 }

@@ -9,19 +9,18 @@
 #include "MeshLoader.h"
 #include "../Texture/Texture.h"
 #include "../Camera/Camera.h"
-#include "../Fisica/Luci/Spot_Light.h"
-#include "../Fisica/Luci/Directional_Light.h"
-#include "../Fisica/Luci/Point_Light.h"
-
-struct MeshStruct;
+#include "../Luci/Luci/Spot_Light.h"
+#include "../Luci/Luci/Directional_Light.h"
+#include "../Luci/Luci/Point_Light.h"
+#include "../Strutture/SceneStruct.h"
 
 class Mesh {
 public:
 	Mesh() {};
-	Mesh(std::vector<MeshStruct> Meshes);
-	void Draw(ShaderLoader shaderLoader, std::vector<glm::mat4> meshesPositions, Camera &camera, unsigned int shadowMap);
+	Mesh(std::vector<MeshDefinition> Meshes);
+	void Draw(ShaderLoader* shaderLoader, Camera &camera, unsigned int shadowMap);
 	void DeleteMeshes();
-	std::vector<MeshLoader>& getMeshes() { return this->Meshes; }
+	inline std::vector<MeshLoader>& getMeshes() { return this->Meshes; }
 
 private:
 	std::vector<MeshLoader> Meshes;

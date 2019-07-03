@@ -8,7 +8,8 @@
 #include "../Mesh/Mesh.h"
 #include "../Camera/Camera.h"
 #include "../Skybox/Skybox.h"
-#include "../Fisica/Shadows/Shadows.h"
+#include "../Luci/Shadows/Shadows.h"
+#include "../Collision Detection/Octree/Octree.h"
 
 class Scene {
 public:
@@ -16,14 +17,16 @@ public:
 	void loadScene(GLuint number);
 	void drawScene();
 	void deleteScene();
+	void updatePositions();
 	SceneList getSL();
 
 private:
 	SceneList _SL;
-	Model _Models;
-	Mesh _Meshes;
-	Shader _Shaders;
-	Skybox _Skybox;
+	Model* _Models;
+	Mesh* _Meshes;
+	Shader* _Shaders;
+	Skybox* _Skybox;
 	Camera &_camera;
 	Shadow _Shadow;
+	Octree* _Octree;
 };
