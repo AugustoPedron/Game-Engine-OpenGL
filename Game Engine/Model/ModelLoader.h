@@ -25,6 +25,7 @@ public:
 	inline std::vector<MeshLoader>& getMeshes() { return this->meshes; }
 	inline glm::mat4& getPosition() { return this->position; }
 	inline glm::vec3& getPositionPhy() { return this->positionPhy; }
+	inline glm::vec3& getLastTranslation() { return this->lastTranslation; }
 	void updatePosition(glm::vec3 newPos);
 	inline GLuint getId() { return this->id; }
 
@@ -32,6 +33,7 @@ private:
 	GLuint id;
 	glm::mat4 position;
 	glm::vec3 positionPhy;
+	glm::vec3 lastTranslation;
 	GLuint moving;
 	std::string directory;
 	std::vector<MeshLoader> meshes;

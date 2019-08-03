@@ -1,7 +1,10 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <memory>
 #include "Scene/Scene.h"
+#include "Collision Detection/Octree/Octree.h"
+#include "Fisica/Fisica.h"
 
 const GLint WIDTH = 800, HEIGHT = 600;
 int SCREEN_WIDTH, SCREEN_HEIGHT;
@@ -41,6 +44,12 @@ int main() {
 		return EXIT_FAILURE;
 	}
 
+	
+	OctreeBounds bounds;
+	bounds.position = glm::vec3(0.0f, -1.75f, 0.0f);
+	bounds.size = 200.0f;
+	std::shared_ptr<Octree> _Octree(new Octree(NULL, bounds, 20, 0));
+
 	camera = Camera(SCREEN_WIDTH, SCREEN_HEIGHT, glm::vec3(0.0f, 0.0f, 3.0f));
 
 	glfwMakeContextCurrent(window);
@@ -65,8 +74,10 @@ int main() {
 	glFrontFace(GL_CCW);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	Scene scene(camera);
-	scene.loadScene(sceneNumber);
+	//Scene scene(camera);
+	std::shared_ptr<Scene> scene(new Scene(camera));
+	scene->loadScene(sceneNumber,_Octree);
+	//scene.loadScene(sceneNumber);
 
 	GLint frames = 0;
 	GLfloat lastTime = glfwGetTime();
@@ -94,13 +105,18 @@ int main() {
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		scene.drawScene();
+		//scene.drawScene();
+		Fisica::moveObject(_Octree);
+		scene->drawScene();
 
 		glfwSwapBuffers(window);
 
 	}
 
-	scene.deleteScene();
+	scene.reset();
+	_Octree.reset();
+
+	//scene.deleteScene();
 
 	glfwTerminate();
 	return EXIT_SUCCESS;

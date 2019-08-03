@@ -167,4 +167,5 @@ void ModelLoader::updatePosition(glm::vec3 translation) {
 	this->positionPhy += translation;
 	this->position = glm::translate(this->position, translation);
 	this->moving = 1;
+	this->lastTranslation = translation;
 }

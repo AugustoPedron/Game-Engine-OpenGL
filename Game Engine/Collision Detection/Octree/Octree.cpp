@@ -2,8 +2,12 @@
 
 #pragma region Octree
 
-Octree::Octree(Octree *parent, OctreeBounds Bounds, GLuint maxDepth, GLuint depth)
+Octree::Octree(std::shared_ptr<Octree> parent, OctreeBounds Bounds, GLuint maxDepth, GLuint depth)
 {
+
+}
+
+Octree::Octree(Octree* parent, OctreeBounds Bounds, GLuint maxDepth, GLuint depth) {
 	this->parent = parent;
 	this->maxDepth = maxDepth;
 	this->Bounds = Bounds;
@@ -13,43 +17,44 @@ Octree::Octree(Octree *parent, OctreeBounds Bounds, GLuint maxDepth, GLuint dept
 	}
 }
 
-void Octree::addObject(ModelLoader& model)
+void Octree::addObject(std::shared_ptr<ModelLoader> model)
 {
 	GLuint i = 0, k = 0;
 	VertexOctree vertexTemp;
 	IndexOctree indexTemp;
 	std::vector<VertexOctree> verticesToAdd;
 	std::vector<IndexOctree> indicesToAdd;
-	std::vector<MeshLoader>::iterator it2 = model.getMeshes().begin();
-	for (it2; it2 != model.getMeshes().end(); it2++, k++) {
-		this->vertices.push_back(it2->getVertices());
+	std::vector<MeshLoader>::iterator it2 = model->getMeshes().begin();
+	for (it2; it2 != model->getMeshes().end(); it2++, k++) {
+		i = 0;
+		this->vertices.push_back(std::shared_ptr<std::vector<Vertex>>(&it2->getVertices()));
 		std::vector<GLuint>::iterator it = it2->getIndices().begin();
-		for (it; it != it2->getIndices().end(); it += 3) {
-			for (GLuint j = 0; j < 3; j++, i++) {
-				vertexTemp.Position = this->vertices.back().get()[it2->getIndices()[i]].Position;
-				vertexTemp.Normal = this->vertices.back().get()[it2->getIndices()[i]].Normal;
-				verticesToAdd.push_back(vertexTemp);
+		for (it; it != it2->getIndices().end(); it++) {
+			//vertexTemp.Position = this->vertices.back().get()[*it].Position;
+			vertexTemp.Position = this->vertices.back()->at(*it).Position;
+			//vertexTemp.Normal = this->vertices.back().get()[*it].Normal;
+			vertexTemp.Normal = this->vertices.back()->at(*it).Normal;
+			verticesToAdd.push_back(vertexTemp);
 
-				indexTemp.index = it2->getIndices()[i];
-				indicesToAdd.push_back(indexTemp);
-			}
+			indexTemp.index = *it;
+			indicesToAdd.push_back(indexTemp);
 		}
 		insertRecursive(verticesToAdd, indicesToAdd, 0, this->vertices.size() - 1, model, this->vertices);
 	}
 
 }
 
-bool Octree::insertRecursive(std::vector<VertexOctree>& vertices, std::vector<IndexOctree>& indices, GLuint depth, GLuint meshNumber, ModelLoader& model, std::vector<std::reference_wrapper<std::vector<Vertex>>> verticesRef) {
-	this->ModelsIdList.push_back(model.getId());
+bool Octree::insertRecursive(std::vector<VertexOctree>& vertices, std::vector<IndexOctree>& indices, GLuint depth, GLuint meshNumber, std::shared_ptr<ModelLoader> model, std::vector<std::shared_ptr<std::vector<Vertex>>> verticesRef) {
+	this->ModelsIdList.insert(std::pair<GLuint, std::shared_ptr<ModelLoader>>(model->getId(), model));
 	int childFlag[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
 	if (depth > this->maxDepth) return true;
 
 	for (GLuint i = 0; i < indices.size(); i++) {
 		indices[i].code = 0;
-		if (vertices[indices[i].index].Position.x * model.getPositionPhy().x > this->Bounds.position.x) indices[i].code |= 1;
-		if (vertices[indices[i].index].Position.y * model.getPositionPhy().y > this->Bounds.position.y) indices[i].code |= 2;
-		if (vertices[indices[i].index].Position.z * model.getPositionPhy().z > this->Bounds.position.z) indices[i].code |= 4;
+		if (vertices[indices[i].index].Position.x * model->getPositionPhy().x > this->Bounds.position.x) indices[i].code |= 1;
+		if (vertices[indices[i].index].Position.y * model->getPositionPhy().y > this->Bounds.position.y) indices[i].code |= 2;
+		if (vertices[indices[i].index].Position.z * model->getPositionPhy().z > this->Bounds.position.z) indices[i].code |= 4;
 
 		if ((i + 1) % 3 == 0) {
 			if (indices[i - 2].code == indices[i - 1].code && indices[i - 2].code == indices[i].code) {
@@ -75,7 +80,7 @@ bool Octree::insertRecursive(std::vector<VertexOctree>& vertices, std::vector<In
 			newBounds.position.z += newBounds.size * offsets[i].z;
 			newBounds.size *= 0.5;
 			this->alreadyCreated[i] = 1;
-			this->children[i] = new Octree(this, newBounds, this->maxDepth, depth + 1);
+			this->children[i] = std::make_shared<Octree>(this, newBounds, this->maxDepth, depth + 1);
 		}
 
 		indicesTemp.clear();
@@ -100,18 +105,25 @@ bool Octree::insertRecursive(std::vector<VertexOctree>& vertices, std::vector<In
 
 void Octree::updateOctree(GLuint id) {
 	GLuint flag = 0;
-	std::vector<GLuint>::iterator it = this->ModelsIdList.begin();
+	GLuint flagDelete = 0;
+	std::map<GLuint, std::shared_ptr<ModelLoader>>::iterator it = this->ModelsIdList.begin();
 	for (it; it != this->ModelsIdList.end(); it++) {
-		if (*it == id) {
+		if (it->first == id) {
 			flag = 1;
 			if (this->triangles.size() > 0) {
 				std::vector<OctreeNodeTriangle>::iterator it2 = this->triangles.begin();
 				for (it2; it2 != this->triangles.end(); it2++) {
-					if (it2->ML.getId() == id && this->checkBoundingBox(*it2)) {
-						OctreeNodeTriangle temp = *it2;
-						this->triangles.erase(it2);
-						this->moveTrianglesUp(temp);
+
+					if (flagDelete) {
 						it2--;
+						flagDelete = 0;
+					}
+
+					if (it2->ML->getId() == id && this->checkBoundingBox(*it2)) {
+						OctreeNodeTriangle temp = *it2;
+						it2 = this->triangles.erase(it2);
+						flagDelete = 1;
+						this->moveTrianglesUp(temp);
 					}
 				}
 			}
@@ -128,12 +140,20 @@ void Octree::updateOctree(GLuint id) {
 
 bool Octree::checkBoundingBox(OctreeNodeTriangle& triangle) {
 	for (GLuint i = 0; i < 3; i++) {
-		if ((triangle.verticesRef.get()[triangle.meshNumber].get()[triangle.indices[i]].Position.x * triangle.ML.getPositionPhy().x) > (Bounds.position.x + Bounds.size)) return true;
+		/*if ((triangle.verticesRef.get()[triangle.meshNumber].get()[triangle.indices[i]].Position.x * triangle.ML.getPositionPhy().x) > (Bounds.position.x + Bounds.size)) return true;
 		if ((triangle.verticesRef.get()[triangle.meshNumber].get()[triangle.indices[i]].Position.x * triangle.ML.getPositionPhy().x) < (Bounds.position.x - Bounds.size)) return true;
 		if ((triangle.verticesRef.get()[triangle.meshNumber].get()[triangle.indices[i]].Position.y * triangle.ML.getPositionPhy().y) > (Bounds.position.y + Bounds.size)) return true;
 		if ((triangle.verticesRef.get()[triangle.meshNumber].get()[triangle.indices[i]].Position.y * triangle.ML.getPositionPhy().y) < (Bounds.position.y - Bounds.size)) return true;
 		if ((triangle.verticesRef.get()[triangle.meshNumber].get()[triangle.indices[i]].Position.z * triangle.ML.getPositionPhy().z) > (Bounds.position.z + Bounds.size)) return true;
-		if ((triangle.verticesRef.get()[triangle.meshNumber].get()[triangle.indices[i]].Position.z * triangle.ML.getPositionPhy().z) < (Bounds.position.z - Bounds.size)) return true;
+		if ((triangle.verticesRef.get()[triangle.meshNumber].get()[triangle.indices[i]].Position.z * triangle.ML.getPositionPhy().z) < (Bounds.position.z - Bounds.size)) return true;*/
+
+		if (triangle.verticesRef.at(triangle.meshNumber)->at(triangle.indices[i]).Position.x * triangle.ML->getPositionPhy().x > (Bounds.position.x + Bounds.size)) return true;
+		if (triangle.verticesRef.at(triangle.meshNumber)->at(triangle.indices[i]).Position.x * triangle.ML->getPositionPhy().x < (Bounds.position.x - Bounds.size)) return true;
+		if (triangle.verticesRef.at(triangle.meshNumber)->at(triangle.indices[i]).Position.y * triangle.ML->getPositionPhy().y > (Bounds.position.y + Bounds.size)) return true;
+		if (triangle.verticesRef.at(triangle.meshNumber)->at(triangle.indices[i]).Position.y * triangle.ML->getPositionPhy().y < (Bounds.position.y - Bounds.size)) return true;
+		if (triangle.verticesRef.at(triangle.meshNumber)->at(triangle.indices[i]).Position.z * triangle.ML->getPositionPhy().z > (Bounds.position.z + Bounds.size)) return true;
+		if (triangle.verticesRef.at(triangle.meshNumber)->at(triangle.indices[i]).Position.z * triangle.ML->getPositionPhy().z < (Bounds.position.z - Bounds.size)) return true;
+
 	}
 	return false;
 }
@@ -162,16 +182,19 @@ void Octree::moveTriangleDown() {
 }
 
 bool Octree::insertRecursive(OctreeNodeTriangle& triangle, GLuint depth) {
-	this->ModelsIdList.push_back(triangle.ML.getId());
+	this->ModelsIdList.insert(std::pair<GLuint, std::shared_ptr<ModelLoader>>(triangle.ML->getId(), triangle.ML));
 
 	if (depth > this->maxDepth) return true;
 
 	std::vector<GLuint> code;
 	for (GLuint i = 0; i < 3; i++) {
 		code[i] = 0;
-		if (triangle.verticesRef.get()[triangle.meshNumber].get()[triangle.indices[i]].Position.x * triangle.ML.getPositionPhy().x > this->Bounds.position.x) code[i] |= 1;
-		if (triangle.verticesRef.get()[triangle.meshNumber].get()[triangle.indices[i]].Position.y * triangle.ML.getPositionPhy().y > this->Bounds.position.y) code[i] |= 2;
-		if (triangle.verticesRef.get()[triangle.meshNumber].get()[triangle.indices[i]].Position.z * triangle.ML.getPositionPhy().z > this->Bounds.position.z) code[i] |= 4;
+		/*if (triangle.verticesRef.at(triangle.meshNumber).get()[triangle.indices[i]].Position.x * triangle.ML.getPositionPhy().x > this->Bounds.position.x) code[i] |= 1;
+		if (triangle.verticesRef.at(triangle.meshNumber).get()[triangle.indices[i]].Position.y * triangle.ML.getPositionPhy().y > this->Bounds.position.y) code[i] |= 2;
+		if (triangle.verticesRef.at(triangle.meshNumber).get()[triangle.indices[i]].Position.z * triangle.ML.getPositionPhy().z > this->Bounds.position.z) code[i] |= 4;*/
+		if (triangle.verticesRef.at(triangle.meshNumber)->at(triangle.indices[i]).Position.x * triangle.ML->getPositionPhy().x > this->Bounds.position.x) code[i] |= 1;
+		if (triangle.verticesRef.at(triangle.meshNumber)->at(triangle.indices[i]).Position.y * triangle.ML->getPositionPhy().y > this->Bounds.position.y) code[i] |= 2;
+		if (triangle.verticesRef.at(triangle.meshNumber)->at(triangle.indices[i]).Position.z * triangle.ML->getPositionPhy().z > this->Bounds.position.z) code[i] |= 4;
 
 		if ((i + 1) % 3 == 0) {
 			if (code[i - 2] == code[i - 1] && code[i - 2] == code[i]) {
@@ -182,7 +205,7 @@ bool Octree::insertRecursive(OctreeNodeTriangle& triangle, GLuint depth) {
 					newBounds.position.z += newBounds.size * offsets[i].z;
 					newBounds.size *= 0.5;
 					this->alreadyCreated[code[i]] = 1;
-					this->children[code[i]] = new Octree(this, newBounds, this->maxDepth, depth + 1);
+					this->children[code[i]] = std::make_shared<Octree>(this, newBounds, this->maxDepth, depth + 1);
 				}
 
 				if (this->children[code[i]]->insertRecursive(triangle, depth + 1)) {
@@ -198,11 +221,35 @@ bool Octree::insertRecursive(OctreeNodeTriangle& triangle, GLuint depth) {
 	return false;
 }
 
+void Octree::checkCollisionRecursive(GLuint id, glm::vec3 translation) {
+	if (this->ModelsIdList.find(id) != this->ModelsIdList.end() && this->ModelsIdList.size() > 1) {
+		if (this->triangles.size() > 0) {
+			std::vector<OctreeNodeTriangle>::iterator it = this->triangles.begin();
+			for (it; it != this->triangles.end(); it++) {
+				if (it->ML->getId() == id) {
+					std::vector<OctreeNodeTriangle>::iterator it2 = this->triangles.begin();
+					for (it2; it2 != this->triangles.end(); it2++) {
+						if (it2->ML->getId() != id) {
+							if ()
+						}
+					}
+
+					this->parent->checkCollisionRecursive(id, translation, *it);
+				}
+			}
+		}
+	}
+}
+
+void Octree::checkCollisionRecursive(GLuint id, glm::vec3 translation, OctreeNodeTriangle& triangleToCheck) {
+
+}
+
 #pragma endregion
 
 #pragma region OctreeNodeMesh
 
-Octree::OctreeNodeTriangle::OctreeNodeTriangle(GLuint meshNumber, GLuint index1, GLuint index2, GLuint index3, ModelLoader& ML, std::vector<std::reference_wrapper<std::vector<Vertex>>> verticesRef) : ML(ML), verticesRef(verticesRef) {
+Octree::OctreeNodeTriangle::OctreeNodeTriangle(GLuint meshNumber, GLuint index1, GLuint index2, GLuint index3, std::shared_ptr<ModelLoader> ML, std::vector<std::shared_ptr<std::vector<Vertex>>> verticesRef) : ML(ML), verticesRef(verticesRef) {
 	this->meshNumber = meshNumber;
 	this->indices.push_back(index1);
 	this->indices.push_back(index2);

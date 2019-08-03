@@ -11,11 +11,12 @@
 class Model {
 public:
 	Model() {};
-	Model(std::vector<ModelDefinition> models, Octree *octree);
+	Model(std::vector<ModelDefinition> models, std::shared_ptr<Octree> octree);
 	void Draw(ShaderLoader* shaderLoader, Camera &camera, unsigned int shadowMap);
 	void DeleteModels();
-	inline std::map<const GLchar*, ModelLoader>& getModels() { return this->Models; }
+	inline std::vector<std::shared_ptr<ModelLoader>>& getModels() { return this->Models; }
 
 private:
-	std::map<const GLchar*, ModelLoader> Models;
+	//std::map<const GLchar*, ModelLoader> Models;
+	std::vector<std::shared_ptr<ModelLoader>> Models;
 };

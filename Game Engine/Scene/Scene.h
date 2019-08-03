@@ -14,7 +14,7 @@
 class Scene {
 public:
 	Scene(Camera &camera);
-	void loadScene(GLuint number);
+	void loadScene(GLuint number, std::shared_ptr<Octree> Octree);
 	void drawScene();
 	void deleteScene();
 	void updatePositions();
@@ -28,5 +28,5 @@ private:
 	Skybox* _Skybox;
 	Camera &_camera;
 	Shadow _Shadow;
-	Octree* _Octree;
+	//Octree* _Octree;
 };
