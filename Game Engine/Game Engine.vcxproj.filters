@@ -24,6 +24,7 @@
     <ClCompile Include="Luci\Luci\Spot_Light.cpp" />
     <ClCompile Include="Luci\Shadows\Shadows.cpp" />
     <ClCompile Include="Fisica\Fisica.cpp" />
+    <ClCompile Include="Collision Detection\OctreeTester\OctreeTester.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll" />
@@ -38,6 +39,8 @@
     <None Include="GLSL\modelLoading.vs" />
     <None Include="GLSL\shadowShader.frag" />
     <None Include="GLSL\shadowShader.vs" />
+    <None Include="GLSL\octree.frag" />
+    <None Include="GLSL\octree.vs" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera\Camera.h" />
@@ -77,5 +80,7 @@
     <ClInclude Include="Luci\Luci\Spot_Light.h" />
     <ClInclude Include="Luci\Shadows\Shadows.h" />
     <ClInclude Include="Fisica\Fisica.h" />
+    <ClInclude Include="Collision Detection\OctreeTester\OctreeTester.h" />
+    <ClInclude Include="Strutture\OctreeStruct.h" />
   </ItemGroup>
 </Project>

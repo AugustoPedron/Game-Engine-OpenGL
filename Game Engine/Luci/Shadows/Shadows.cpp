@@ -69,17 +69,17 @@ void Shadow::DrawShadows(ShaderLoader* shadowShader, Mesh* Meshes, Model* Models
 			shadowShader->SetMat4("model", (*it2)->getPosition());
 			for (GLuint j = 0; j < (*it2)->getMeshes().size(); j++) {
 				GLuint diffuseNr = 1;
-				for (i = 0; i < (*it2)->getMeshes()[j].getTextures().size(); i++) {
-					if ("texture_diffuse" == (*it2)->getMeshes()[j].getTextures()[i].type) {
+				for (i = 0; i < (*it2)->getMeshes()[j]->getTextures().size(); i++) {
+					if ("texture_diffuse" == (*it2)->getMeshes()[j]->getTextures()[i].type) {
 						glActiveTexture(GL_TEXTURE0 + i);
-						glBindTexture(GL_TEXTURE_2D, (*it2)->getMeshes()[j].getTextures()[i].id);
+						glBindTexture(GL_TEXTURE_2D, (*it2)->getMeshes()[j]->getTextures()[i].id);
 					}
 				}
 
-				glBindVertexArray((*it2)->getMeshes()[j].getVAO());
-				glDrawElements(GL_TRIANGLES, (*it2)->getMeshes()[j].getIndices().size(), GL_UNSIGNED_INT, 0);
+				glBindVertexArray((*it2)->getMeshes()[j]->getVAO());
+				glDrawElements(GL_TRIANGLES, (*it2)->getMeshes()[j]->getIndices().size(), GL_UNSIGNED_INT, 0);
 				glBindVertexArray(0);
-				for (GLuint i = 0; i < (*it2)->getMeshes()[j].getTextures().size(); i++) {
+				for (GLuint i = 0; i < (*it2)->getMeshes()[j]->getTextures().size(); i++) {
 					glActiveTexture(GL_TEXTURE0 + i);
 					glBindTexture(GL_TEXTURE_2D, 0);
 				}

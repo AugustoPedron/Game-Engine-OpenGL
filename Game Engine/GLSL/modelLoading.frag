@@ -68,17 +68,17 @@ void main( )
 	vec3 viewDir = normalize( viewPos - FragPos );
 	float gamma = 2.2;
 
-	if(enableDir){
+	if(enableDir == 1){
 		result += CalcDirLight( dirLight, norm, FragPos, viewDir );
 	}
 
-	if(enablePoint){
+	if(enablePoint == 1){
 		for( int i = 0; i < NUMBER_OF_POINT_LIGHT; i++ ){
 			result += CalcPointLight( pointLights[i], norm, FragPos, viewDir );
 		}
 	}
 
-	if(enableSpot){
+	if(enableSpot == 1){
 		result += CalcSpotLight ( spotLight, norm, FragPos, viewDir );
 	}
 

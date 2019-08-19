@@ -1,4 +1,14 @@
-﻿  Fisica.cpp
-  Model.cpp
-  Generazione del codice in corso...
-  Game Engine.vcxproj -> F:\Augusto\Università\Progetto grafica\Progetto opengl\Game-Engine\Debug\Game Engine.exe
+﻿  Main.cpp
+e:\augusto\università\progetto grafica\game engine\game-engine\game engine\main.cpp(95): warning C4244: 'inizializzazione': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+e:\augusto\università\progetto grafica\game engine\game-engine\game engine\main.cpp(105): warning C4244: 'inizializzazione': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+e:\augusto\università\progetto grafica\game engine\game-engine\game engine\main.cpp(209): warning C4244: '=': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+e:\augusto\università\progetto grafica\game engine\game-engine\game engine\main.cpp(210): warning C4244: '=': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+e:\augusto\università\progetto grafica\game engine\game-engine\game engine\main.cpp(214): warning C4244: 'inizializzazione': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+e:\augusto\università\progetto grafica\game engine\game-engine\game engine\main.cpp(215): warning C4244: 'inizializzazione': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+e:\augusto\università\progetto grafica\game engine\game-engine\game engine\main.cpp(217): warning C4244: '=': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+e:\augusto\università\progetto grafica\game engine\game-engine\game engine\main.cpp(218): warning C4244: '=': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+e:\augusto\università\progetto grafica\game engine\game-engine\game engine\main.cpp(230): warning C4244: 'argomento': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+e:\augusto\università\progetto grafica\game engine\game-engine\game engine\main.cpp(231): warning C4552: '!=': risultato dell'espressione non usato
+e:\augusto\università\progetto grafica\game engine\game-engine\game engine\main.cpp(235): warning C4244: 'argomento': conversione da 'double' a 'GLfloat'. Possibile perdita di dati.
+e:\augusto\università\progetto grafica\game engine\game-engine\game engine\main.cpp(236): warning C4552: '!=': risultato dell'espressione non usato
+  Game Engine.vcxproj -> E:\Augusto\Università\Progetto grafica\Game Engine\Game-Engine\Debug\Game Engine.exe

@@ -3,16 +3,18 @@
 ModelLoader::ModelLoader(ModelDefinition model, GLuint id) {
 	this->id = id;
 	this->moving = 0;
+	this->startMoving = 0;
 	this->position = model.position;
 	this->positionPhy = model.positionPhy;
 	this->path = model.path;
+	this->rotation = model.angle;
 	this->loadModel();
 }
 
 void ModelLoader::Draw(ShaderLoader* shader, unsigned int shadowMap) {
 	for (GLuint i = 0; i < this->meshes.size(); i++) {
 		shader->SetMat4("model", this->position);
-		this->meshes[i].Draw(shader, shadowMap);
+		this->meshes[i]->Draw(shader, shadowMap);
 	}
 }
 
@@ -32,7 +34,7 @@ void ModelLoader::loadModel() {
 void ModelLoader::processNode(aiNode *node, const aiScene *scene) {
 	for (GLuint i = 0; i < node->mNumMeshes; i++) {
 		aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-		MeshLoader ML = this->processMesh(mesh, scene);
+		std::shared_ptr<MeshLoader> ML = std::shared_ptr<MeshLoader>(this->processMesh(mesh, scene));
 		this->meshes.push_back(ML);
 	}
 
@@ -41,7 +43,7 @@ void ModelLoader::processNode(aiNode *node, const aiScene *scene) {
 	}
 }
 
-MeshLoader ModelLoader::processMesh(aiMesh *mesh, const aiScene *scene) {
+MeshLoader* ModelLoader::processMesh(aiMesh *mesh, const aiScene *scene) {
 	std::vector<Vertex> vertices;
 	std::vector<GLuint> indices;
 	std::vector<structTexture> textures;
@@ -101,7 +103,7 @@ MeshLoader ModelLoader::processMesh(aiMesh *mesh, const aiScene *scene) {
 	maxy >= miny * -1 ? diffy = maxy : diffy = miny * -1;
 	maxz >= minz * -1 ? diffz = maxz : diffz = minz * -1;*/
 
-	return MeshLoader(vertices, indices, textures);
+	return new MeshLoader(vertices, indices, textures);
 }
 
 std::vector<structTexture> ModelLoader::loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName) {
@@ -154,18 +156,38 @@ GLuint ModelLoader::TextureFromFile(const char *path, std::string directory) {
 	return textureID;
 }
 
-void ModelLoader::DeleteModel() {
-	std::vector<MeshLoader>::iterator it = this->meshes.begin();
-	for (it; it != this->meshes.end(); it++) {
-		it->DeleteMesh();
+void ModelLoader::updatePosition(glm::vec3 translation) {
+	if (translation.x != 0 || translation.y != 0 || translation.z != 0) {
+		this->positionPhy += translation;
+		//this->position = glm::rotate(this->position, -20.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+		this->position = glm::translate(this->position, translation);
+		//this->position = glm::rotate(this->position, 20.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+		this->moving = 1;
+		this->lastTranslation = translation;
 	}
-	std::vector<MeshLoader>().swap(this->meshes);
+	else {
+		this->moving = 0;
+		this->lastTranslation = translation;
+	}
+
+	if(this->model != NULL) this->model->updatePosition(translation);
+}
+
+void ModelLoader::revertLastTranslation() {
+	this->positionPhy -= this->lastTranslation;
+	this->position = glm::translate(this->position, -this->lastTranslation);
+	this->moving = 0;
+	this->startMoving = 1;
+	this->lastTranslation = glm::vec3(0.0f);
+}
+
+ModelLoader::~ModelLoader() {
+	this->meshes.clear();
+	std::vector<std::shared_ptr<MeshLoader>>().swap(this->meshes);
+	this->textures_loaded.clear();
 	std::vector<structTexture>().swap(this->textures_loaded);
 }
 
-void ModelLoader::updatePosition(glm::vec3 translation) {
-	this->positionPhy += translation;
-	this->position = glm::translate(this->position, translation);
-	this->moving = 1;
-	this->lastTranslation = translation;
+void ModelLoader::addModelPointer(std::shared_ptr<ModelLoader> pointer) {
+	this->model = pointer;
 }

@@ -1,7 +1,7 @@
 #include "MeshLoader.h"
 //creazione della mesh per un modello esportato in formato obj
 MeshLoader::MeshLoader(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<structTexture>& textures) {
-	this->vertices = vertices;
+	this->vertices =  std::shared_ptr<std::vector<Vertex>>(new std::vector<Vertex>(vertices));
 	this->indices = indices;
 	this->textures = textures;
 	this->SetupMesh();
@@ -11,7 +11,7 @@ MeshLoader::MeshLoader(MeshDefinition& Mesh) {
 	this->position = Mesh.position;
 	this->diffuseMap = TextureLoader::LoadTexture(Mesh.mesh.texture_diffuse.c_str());
 	this->specularMap = TextureLoader::LoadTexture(Mesh.mesh.texture_specular.c_str());
-	this->vertices = Mesh.mesh.Vertices;
+	this->vertices = std::shared_ptr<std::vector<Vertex>>(new std::vector<Vertex>(Mesh.mesh.Vertices));
 	this->SetupMeshNoIndices();
 }
 
@@ -83,7 +83,7 @@ void MeshLoader::SetupMesh() {
 	glBindVertexArray(this->VAO);
 	//si riempie il VBO con le posizioni dei vertici
 	glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
-	glBufferData(GL_ARRAY_BUFFER, this->vertices.size() * sizeof(Vertex), &this->vertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, this->vertices->size() * sizeof(Vertex), &this->vertices->at(0), GL_STATIC_DRAW);
 	//si riempie il EBO con gli indici dei vertici che verranno usati.
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->indices.size() * sizeof(GLuint), &this->indices[0], GL_STATIC_DRAW);
@@ -114,7 +114,7 @@ void MeshLoader::SetupMeshNoIndices() {
 	glGenBuffers(1, &this->VBO);
 	glBindVertexArray(this->VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
-	glBufferData(GL_ARRAY_BUFFER, this->vertices.size() * sizeof(Vertex), &this->vertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, this->vertices->size() * sizeof(Vertex), &this->vertices->at(0), GL_STATIC_DRAW);
 
 	//vertex positions
 	glEnableVertexAttribArray(0);
@@ -130,34 +130,12 @@ void MeshLoader::SetupMeshNoIndices() {
 
 	glBindVertexArray(0);
 }
-/*
-void MeshLoader::DrawShadows(ShaderLoader shader, glm::vec3 lightPos, glm::mat4 lightSpaceMatrix) {
 
-	shader.use();
-
-	shader.SetMat4("lightSpaceMatrix", lightSpaceMatrix);
-
-	glViewport(0, 0, ShadowSetter::SHADOW_WIDTH, ShadowSetter::SHADOW_HEIGHT);
-	glBindFramebuffer(GL_FRAMEBUFFER, this->shadow->getDepthMapFBO());
-	glClear(GL_DEPTH_BUFFER_BIT);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, this->diffuseMap);
-	glm::mat4 model(1.0f);
-	model = glm::scale(model, glm::vec3(50.0f));
-	model = glm::translate(model, glm::vec3(0.0f, -0.53f, 0.0f));
-	shader.SetMat4("model", model);
-	glBindVertexArray(this->VAO);
-	glDrawArrays(GL_TRIANGLES, 0, 36);
-	glBindVertexArray(0);
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-}*/
-
-void MeshLoader::DeleteMesh() {
+MeshLoader::~MeshLoader() {
 	glDeleteVertexArrays(1, &this->VAO);
 	glDeleteBuffers(1, &this->VBO);
 	glDeleteBuffers(1, &this->EBO);
-	std::vector<Vertex>().swap(this->vertices);
+	this->vertices.reset();
 	std::vector<GLuint>().swap(this->indices);
 	std::vector<structTexture>().swap(this->textures);
-	
 }

@@ -13,7 +13,7 @@ enum Camera_movements {
 };
 
 const GLfloat YAW = -90.0f;
-const GLfloat PITCH = 0.0f;
+const GLfloat PITCH = -10.0f;
 const GLfloat SPEED = 6.0f;
 const GLfloat SENS = 0.25f;
 const GLfloat ZOOM = 45.0f;
@@ -23,11 +23,12 @@ const glm::vec3 lightPos(20.0f, 100.0f, 30.0f);
 class Camera {
 public:
 	Camera() {};
-	Camera(int screen_widht, int screen_height, glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), GLfloat yaw = YAW, GLfloat pitch = PITCH);
-	Camera(GLfloat posX, GLfloat posY, GLfloat posZ, GLfloat upX, GLfloat upY, GLfloat upZ, GLfloat yaw, GLfloat pitch);
+	Camera(int screen_widht, int screen_height, GLfloat position, bool* cameraMode, glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), GLfloat yaw = YAW, GLfloat pitch = PITCH);
+	Camera(GLfloat position, GLfloat upX, GLfloat upY, GLfloat upZ, GLfloat yaw, GLfloat pitch, bool* cameraMode);
 	void processKeyboard(Camera_movements direction, GLfloat deltaTime);
 	void processMouseMovement(GLfloat xOffset, GLfloat yOffset, GLboolean constrainPitch = true);
 	void processMouseScroll(GLfloat yOffset);
+	void movement(glm::vec3 movement);
 	GLfloat getZoom();
 	glm::vec3 getPosition();
 	glm::mat4 GetViewMatrix();
@@ -36,8 +37,12 @@ public:
 	inline int getScrWidth() { return this->screen_width; }
 	inline int getScrHeight() { return this->screen_height; }
 	inline glm::mat4 getLightSpaceMatrix() { return this->lightSpaceMatrix; }
+	void setObjectPosition(glm::vec3* position);
+	void updatePosition();
 
 private:
+	glm::vec3* objectPosition;
+	GLfloat distanca;
 	glm::vec3 position;
 	glm::vec3 front;
 	glm::vec3 up;
@@ -50,6 +55,7 @@ private:
 	GLfloat mouseSens;
 	GLfloat movementSpeed;
 	GLfloat zoom;
+	bool* cameraMode;
 	int screen_width;
 	int screen_height;
 	void updateCameraVectors();

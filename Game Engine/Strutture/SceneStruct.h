@@ -7,7 +7,10 @@
 #include "MeshStruct.h"
 
 struct ModelDefinition {
+	std::string pathModel;
+	std::string pathBoundingBox;
 	std::string path;
+	float angle;
 	glm::mat4 position;
 	glm::vec3 positionPhy;
 };

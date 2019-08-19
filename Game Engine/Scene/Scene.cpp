@@ -11,6 +11,7 @@ void Scene::loadScene(GLuint number, std::shared_ptr<Octree> Octree)
 	this->_Meshes = new Mesh(this->_SL.getSceneComp().Meshes);
 	this->_Shaders = new Shader(this->_SL.getSceneComp().Shaders);
 	this->_Skybox = new Skybox(this->_SL.getSceneComp().Skybox);
+	this->_camera.setObjectPosition(&(this->_Models->getModels().at(0)->getPositionPhy()));
 }
 
 void Scene::drawScene() {
@@ -32,8 +33,9 @@ SceneList Scene::getSL() {
 	return this->_SL;
 }
 
-void Scene::deleteScene() {
-	this->_Models->DeleteModels();
-	this->_Meshes->DeleteMeshes();
-	this->_Skybox->DeleteSkybox();
+Scene::~Scene() {
+	delete this->_Models;
+	delete this->_Meshes;
+	delete this->_Shaders;
+	delete this->_Skybox;
 }

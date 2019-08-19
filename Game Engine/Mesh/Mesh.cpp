@@ -24,10 +24,7 @@ void Mesh::Draw(ShaderLoader* shaderLoader, Camera &camera, unsigned int shadowM
 	}
 }
 
-void Mesh::DeleteMeshes() {
-	std::vector<MeshLoader>::iterator it = this->Meshes.begin();
-
-	for (it; it != this->Meshes.end(); it++) {
-		it->DeleteMesh();
-	}
+Mesh::~Mesh() {
+	this->Meshes.clear();
+	std::vector<MeshLoader>().swap(this->Meshes);
 }

@@ -18,8 +18,8 @@ class Mesh {
 public:
 	Mesh() {};
 	Mesh(std::vector<MeshDefinition> Meshes);
+	~Mesh();
 	void Draw(ShaderLoader* shaderLoader, Camera &camera, unsigned int shadowMap);
-	void DeleteMeshes();
 	inline std::vector<MeshLoader>& getMeshes() { return this->Meshes; }
 
 private:

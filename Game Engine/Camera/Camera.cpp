@@ -1,13 +1,15 @@
 #include "Camera.h"
 
-Camera::Camera(int screen_width, int screen_height, glm::vec3 position, glm::vec3 up, GLfloat yaw, GLfloat pitch)
+Camera::Camera(int screen_width, int screen_height, GLfloat position, bool* cameraMode, glm::vec3 up, GLfloat yaw, GLfloat pitch)
 	: front(glm::vec3(0.0f, 0.0f, -1.0f)), movementSpeed(SPEED), mouseSens(SENS), zoom(ZOOM) {
-	this->position = position;
+	this->distanca = position;
 	this->worldUp = up;
 	this->yaw = yaw;
 	this->pitch = pitch;
 	this->screen_height = screen_height;
 	this->screen_width = screen_width;
+	this->objectPosition = NULL;
+	this->cameraMode = cameraMode;
 	this->projection = glm::perspective(this->zoom, (GLfloat)this->screen_width / (GLfloat)this->screen_height, 0.1f, 1000.0f);
 	glm::mat4 lightView, lightProjection;
 	lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
@@ -17,12 +19,14 @@ Camera::Camera(int screen_width, int screen_height, glm::vec3 position, glm::vec
 }
 
 
-Camera::Camera(GLfloat posX, GLfloat posY, GLfloat posZ, GLfloat upX, GLfloat upY, GLfloat upZ,	GLfloat yaw, GLfloat pitch) 
-	: front(glm::vec3(0.0f, 0.0f, -1.0f)), movementSpeed(SPEED), mouseSens(SENS), zoom(ZOOM) {
-	this->position = glm::vec3(posX, posY, posZ);
+Camera::Camera(GLfloat position, GLfloat upX, GLfloat upY, GLfloat upZ, GLfloat yaw, GLfloat pitch, bool* cameraMode)
+	: front(glm::vec3(0.0f, -0.6f, -1.0f)), movementSpeed(SPEED), mouseSens(SENS), zoom(ZOOM) {
+	this->distanca = position;
 	this->worldUp = glm::vec3(upX, upY, upZ);
 	this->yaw = yaw;
 	this->pitch = pitch;
+	this->objectPosition = NULL;
+	this->cameraMode = cameraMode;
 	this->updateCameraVectors();
 }
 
@@ -81,6 +85,11 @@ void Camera::updateCameraVectors() {
 	this->front = glm::normalize(front);
 	this->right = glm::normalize(glm::cross(this->front, this->worldUp));
 	this->up = glm::normalize(glm::cross(this->right, this->front));
+	if (*cameraMode) this->updatePosition();
+}
+
+void Camera::movement(glm::vec3 movement) {
+	this->position += movement;
 }
 
 GLfloat Camera::getZoom() {
@@ -96,9 +105,21 @@ glm::vec3 Camera::getFront() {
 }
 
 glm::mat4 Camera::GetViewMatrix() {
-	return glm::lookAt(this->position, this->position + this->front, this->up);
+	return glm::lookAt(this->position, this->position + this->front - glm::vec3(0.0f, 0.15f, 0.0f), this->up);
 }
 
 glm::mat4 Camera::getProjection() {
 	return this->projection;
+}
+
+void Camera::updatePosition() {
+	if (this->objectPosition != NULL) {
+		glm::vec3 relativePosition = -this->front * this->distanca + glm::vec3(0.0f, 1.5f, 0.0f);
+		this->position = relativePosition + *this->objectPosition;
+	}
+}
+
+void Camera::setObjectPosition(glm::vec3* position) {
+	this->objectPosition = position;
+	this->updatePosition();
 }

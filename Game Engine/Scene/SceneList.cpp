@@ -234,17 +234,29 @@ void SceneList::selectScene(GLuint number) {
 		MD.position = glm::scale(MD.position, glm::vec3(0.2f, 0.2f, 0.2f));
 		SceneComp.Models.push_back(MD);*/
 
-		MD.path = "../Game Engine/Resources/models/cubo.obj";
+		MD.pathModel = "../Game Engine/Resources/models/sfera.obj";
+		MD.pathBoundingBox = "../Game Engine/Resources/models/sferaBound2.obj";
 		MD.position = glm::mat4(1.0f);
-		MD.positionPhy = glm::vec3(0.0f, -1.75f, 0.0f);
-		MD.position = glm::translate(MD.position, MD.positionPhy);	
+		MD.positionPhy = glm::vec3(2.0f, 0.0f, 2.0f);
+		//MD.position = glm::rotate(MD.position, glm::radians(20.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		MD.position = glm::translate(MD.position, MD.positionPhy);
+		//MD.position = glm::rotate(MD.position, 20.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+		//MD.position = glm::rotate(MD.position, 20.0f, glm::vec3(1.0f, 0.0f, 0.0f));
 		//MD.position = glm::scale(MD.position, glm::vec3(0.2f, 0.2f, 0.2f));
 		SceneComp.Models.push_back(MD);
 
-		MD.path = "../Game Engine/Resources/models/cubo.obj";
+		MD.pathModel = "../Game Engine/Resources/models/cubo.obj";
+		MD.pathBoundingBox = "../Game Engine/Resources/models/cubo.obj";
 		MD.position = glm::mat4(1.0f);
-		MD.positionPhy = glm::vec3(0.0f, 1.75f, 0.0f);
+		MD.positionPhy = glm::vec3(2.0f, -0.7f, -2.0f);
 		MD.position = glm::translate(MD.position, MD.positionPhy);	
+		//MD.position = glm::rotate(MD.position, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		MD.angle = 0.0f;
+
+		glm::vec3 p(1.0, -1.0, 1.0);
+		glm::vec3 c(2.0, 0.0, -2.0);
+		glm::vec3 sum = p + c;
+		p = glm::rotateY(p, glm::radians(45.0f));
 		//MD.position = glm::scale(MD.position, glm::vec3(0.2f, 0.2f, 0.2f));
 		SceneComp.Models.push_back(MD);
 

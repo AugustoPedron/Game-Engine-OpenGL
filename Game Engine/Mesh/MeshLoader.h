@@ -20,21 +20,19 @@ public:
 	MeshLoader() {};
 	MeshLoader(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, std::vector<structTexture>& textures);
 	MeshLoader(MeshDefinition& Mesh);
+	~MeshLoader();
 	void Draw(ShaderLoader* shader, unsigned int shadowMap);
 	void DrawNoIndices(ShaderLoader* shader, unsigned int shadowMap);
-	void DeleteMesh();
 	inline GLuint getVAO() { return this->VAO; }
 	inline GLuint getDiffuseMap() { return this->diffuseMap; }
-	inline std::vector<Vertex>& getVertices() { return this->vertices; }
+	inline std::shared_ptr< std::vector<Vertex>> getVertices() { return this->vertices; }
 	inline std::vector<structTexture>& getTextures() { return this->textures; }
 	inline std::vector<GLuint>& getIndices() { return this->indices; }
 	inline glm::mat4& getPosition() { return this->position; }
-	//inline ModelLoader& getML() { return this->ML; }
 
 private:
 	glm::mat4 position;
-	//ModelLoader& ML;
-	std::vector<Vertex> vertices;
+	std::shared_ptr< std::vector<Vertex>> vertices;
 	std::vector<GLuint> indices;
 	std::vector<structTexture> textures;
 	GLuint VAO, VBO, EBO;
